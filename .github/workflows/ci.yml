@@ -5,7 +5,7 @@ on:
     branches:
     - master
   schedule:
-    cron: '00 01 * * *'
+    - cron: '00 01 * * *'
 jobs:
   test:
     name: test
@@ -16,19 +16,19 @@ jobs:
         # include directive, but it result in a "matrix must define at least
         # one vector" error in the CI system.
         build:
-        - pinned-glibc
+        # - pinned-glibc
         - pinned-musl
         - stable
-        - beta
+        # - beta
         # We test musl with nightly because every once in a while, this will
         # catch an upstream regression.
-        - nightly-glibc
-        - nightly-musl
-        - macos
-        - win-msvc-32
-        - win-msvc-64
-        - win-gnu-32
-        - win-gnu-64
+        # - nightly-glibc
+        # - nightly-musl
+        # - macos
+        # - win-msvc-32
+        # - win-msvc-64
+        # - win-gnu-32
+        # - win-gnu-64
         include:
         # - build: pinned-glibc
           # os: ubuntu-18.04
@@ -88,9 +88,12 @@ jobs:
     - name: Install musl-gcc
       if: contains(matrix.target, 'musl')
       run: |
-        apt-get install musl-tools
+        sudo apt-get install musl-tools
     - name: Build everything
       run: cargo build --verbose --target ${{ matrix.target }} --all --features pcre2
+    - name: Install zsh
+      if: matrix.build == 'stable'
+      run: sudo apt-get install zsh
     - name: Test zsh auto-completions
       if: matrix.build == 'stable'
       run: ./ci/test_complete.sh
