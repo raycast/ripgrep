@@ -14,13 +14,13 @@ Performance improvements:
 
 * [PERF #1381](https://github.com/BurntSushi/ripgrep/pull/1381):
   Directory traversal is sped up with speculative ignore-file existence checks.
-* PERF:
+* [PERF cd8ec38a](https://github.com/BurntSushi/ripgrep/commit/cd8ec38a):
   Improve inner literal detection to cover more cases more effectively.
   e.g., ` +Sherlock Holmes +` now has ` Sherlock Holmes ` extracted instead
   of ` `.
-* PERF:
+* [PERF 6a0e0147](https://github.com/BurntSushi/ripgrep/commit/6a0e0147):
   Improve literal detection when the `-w/--word-regexp` flag is used.
-* PERF:
+* [PERF ad97e9c9](https://github.com/BurntSushi/ripgrep/commit/ad97e9c9):
   Improve overall performance of the `-w/--word-regexp` flag.
 
 Feature enhancements:
@@ -35,7 +35,7 @@ Feature enhancements:
   Add `--no-require-git` flag to allow ripgrep to respect gitignores anywhere.
 * [FEATURE #1420](https://github.com/BurntSushi/ripgrep/pull/1420):
   Add `--no-ignore-exclude` to disregard rules in `.git/info/exclude` files.
-* FEATURE:
+* [FEATURE 75cbe88f](https://github.com/BurntSushi/ripgrep/commit/75cbe88f):
   Add `--no-unicode` flag. This works on all supported regex engines.
 
 Bug fixes:
