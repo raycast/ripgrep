@@ -1195,7 +1195,6 @@ impl WalkParallel {
         // this. The best case scenario would be finding a way to use rayon
         // to do this.
         let (tx, rx) = channel::unbounded();
-        let num_pending = Arc::new(AtomicUsize::new(0));
         {
             let mut visitor = builder.build();
             let mut paths = Vec::new().into_iter();
@@ -1233,7 +1232,6 @@ impl WalkParallel {
                         }
                     }
                 };
-                num_pending.fetch_add(1, Ordering::SeqCst);
                 tx.send(Message::Work(Work {
                     dent: dent,
                     ignore: self.ig_root.clone(),
@@ -1248,6 +1246,7 @@ impl WalkParallel {
         }
         // Create the workers and then wait for them to finish.
         let quit_now = Arc::new(AtomicBool::new(false));
+        let num_pending = Arc::new(AtomicUsize::new(tx.len()));
         crossbeam_utils::thread::scope(|s| {
             let mut handles = vec![];
             for _ in 0..threads {
