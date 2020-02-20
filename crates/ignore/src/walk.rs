@@ -1198,7 +1198,6 @@ impl WalkParallel {
         let num_pending = Arc::new(AtomicUsize::new(0));
         {
             let mut visitor = builder.build();
-            let mut any_work = false;
             let mut paths = Vec::new().into_iter();
             std::mem::swap(&mut paths, &mut self.paths);
             // Send the initial set of root paths to the pool of workers. Note
@@ -1241,10 +1240,9 @@ impl WalkParallel {
                     root_device: root_device,
                 }))
                 .unwrap();
-                any_work = true;
             }
             // ... but there's no need to start workers if we don't need them.
-            if !any_work {
+            if tx.is_empty() {
                 return;
             }
         }
