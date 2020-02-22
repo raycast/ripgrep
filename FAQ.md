@@ -51,9 +51,9 @@ ripgrep is a project whose contributors are volunteers. A release schedule
 adds undue stress to said volunteers. Therefore, releases are made on a best
 effort basis and no dates **will ever be given**.
 
-One exception to this is high impact bugs. If a ripgrep release contains a
-significant regression, then there will generally be a strong push to get a
-patch release out with a fix.
+An exception to this _can be_ high impact bugs. If a ripgrep release contains
+a significant regression, then there will generally be a strong push to get a
+patch release out with a fix. However, no promises are made.
 
 
 <h3 name="manpage">
