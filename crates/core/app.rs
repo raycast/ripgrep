@@ -505,6 +505,13 @@ impl RGArg {
         self
     }
 
+    /// Sets the default value of this argument when not specified at
+    /// runtime.
+    fn default_value(mut self, value: &'static str) -> RGArg {
+        self.claparg = self.claparg.default_value(value);
+        self
+    }
+
     /// Sets the default value of this argument if and only if the argument
     /// given is present.
     fn default_value_if(
@@ -563,6 +570,7 @@ pub fn all_args_and_flags() -> Vec<RGArg> {
     flag_debug(&mut args);
     flag_dfa_size_limit(&mut args);
     flag_encoding(&mut args);
+    flag_engine(&mut args);
     flag_file(&mut args);
     flag_files(&mut args);
     flag_files_with_matches(&mut args);
@@ -706,6 +714,8 @@ fn flag_auto_hybrid_regex(args: &mut Vec<RGArg>) {
     const SHORT: &str = "Dynamically use PCRE2 if necessary.";
     const LONG: &str = long!(
         "\
+DEPRECATED. Use --engine instead.
+
 When this flag is used, ripgrep will dynamically choose between supported regex
 engines depending on the features used in a pattern. When ripgrep chooses a
 regex engine, it applies that choice for every regex provided to ripgrep (e.g.,
@@ -738,14 +748,16 @@ This flag can be disabled with --no-auto-hybrid-regex.
         .long_help(LONG)
         .overrides("no-auto-hybrid-regex")
         .overrides("pcre2")
-        .overrides("no-pcre2");
+        .overrides("no-pcre2")
+        .overrides("engine");
     args.push(arg);
 
     let arg = RGArg::switch("no-auto-hybrid-regex")
         .hidden()
         .overrides("auto-hybrid-regex")
         .overrides("pcre2")
-        .overrides("no-pcre2");
+        .overrides("no-pcre2")
+        .overrides("engine");
     args.push(arg);
 }
 
@@ -1179,6 +1191,41 @@ This flag can be disabled with --no-encoding.
     args.push(arg);
 
     let arg = RGArg::switch("no-encoding").hidden().overrides("encoding");
+    args.push(arg);
+}
+
+fn flag_engine(args: &mut Vec<RGArg>) {
+    const SHORT: &str = "Specify which regexp engine to use.";
+    const LONG: &str = long!(
+        "\
+Specify which regular expression engine to use. When you choose a regex engine,
+it applies that choice for every regex provided to ripgrep (e.g., via multiple
+-e/--regexp or -f/--file flags).
+
+Accepted values are 'default', 'pcre2', or 'auto'.
+
+The default value is 'default', which is the fastest and should be good for
+most use cases. The 'pcre2' engine is generally useful when you want to use
+features such as look-around or backreferences. 'auto' will dynamically choose
+between supported regex engines depending on the features used in a pattern on
+a best effort basis.
+
+Note that the 'pcre2' engine is an optional ripgrep feature. If PCRE2 wasn't
+including in your build of ripgrep, then using this flag will result in ripgrep
+printing an error message and exiting.
+
+This overrides previous uses of --pcre2 and --auto-hybrid-regex flags.
+"
+    );
+    let arg = RGArg::flag("engine", "ENGINE")
+        .help(SHORT)
+        .long_help(LONG)
+        .possible_values(&["default", "pcre2", "auto"])
+        .default_value("default")
+        .overrides("pcre2")
+        .overrides("no-pcre2")
+        .overrides("auto-hybrid-regex")
+        .overrides("no-auto-hybrid-regex");
     args.push(arg);
 }
 
@@ -2300,14 +2347,16 @@ This flag can be disabled with --no-pcre2.
         .long_help(LONG)
         .overrides("no-pcre2")
         .overrides("auto-hybrid-regex")
-        .overrides("no-auto-hybrid-regex");
+        .overrides("no-auto-hybrid-regex")
+        .overrides("engine");
     args.push(arg);
 
     let arg = RGArg::switch("no-pcre2")
         .hidden()
         .overrides("pcre2")
         .overrides("auto-hybrid-regex")
-        .overrides("no-auto-hybrid-regex");
+        .overrides("no-auto-hybrid-regex")
+        .overrides("engine");
     args.push(arg);
 }
 

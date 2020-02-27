@@ -9,6 +9,8 @@ Deprecations:
   `--no-pcre2-unicode` and `--pcre2-unicode` are aliases to `--no-unicode`
   and `--unicode`, respectively. The `--[no-]pcre2-unicode` flags may be
   removed in a future release.
+* The `--auto-hybrid-regex` flag is deprecated. Instead, use the new `--engine`
+  flag with the `auto` value.
 
 Performance improvements:
 
@@ -35,6 +37,8 @@ Feature enhancements:
   Add `--no-require-git` flag to allow ripgrep to respect gitignores anywhere.
 * [FEATURE #1420](https://github.com/BurntSushi/ripgrep/pull/1420):
   Add `--no-ignore-exclude` to disregard rules in `.git/info/exclude` files.
+* [FEATURE #1488](https://github.com/BurntSushi/ripgrep/pull/1488):
+  Add '--engine' flag for easier switching between regex engines.
 * [FEATURE 75cbe88f](https://github.com/BurntSushi/ripgrep/commit/75cbe88f):
   Add `--no-unicode` flag. This works on all supported regex engines.
 
