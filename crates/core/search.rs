@@ -70,7 +70,7 @@ impl SearchWorkerBuilder {
         SearchWorkerBuilder {
             config: Config::default(),
             command_builder: cmd_builder,
-            decomp_builder: decomp_builder,
+            decomp_builder,
         }
     }
 

@@ -394,11 +394,11 @@ enum SortByKind {
 
 impl SortBy {
     fn asc(kind: SortByKind) -> SortBy {
-        SortBy { reverse: false, kind: kind }
+        SortBy { reverse: false, kind }
     }
 
     fn desc(kind: SortByKind) -> SortBy {
-        SortBy { reverse: true, kind: kind }
+        SortBy { reverse: true, kind }
     }
 
     fn none() -> SortBy {
@@ -559,10 +559,10 @@ impl ArgMatches {
         };
         Ok(Args(Arc::new(ArgsImp {
             matches: self,
-            patterns: patterns,
-            matcher: matcher,
-            paths: paths,
-            using_default_path: using_default_path,
+            patterns,
+            matcher,
+            paths,
+            using_default_path,
         })))
     }
 }

@@ -50,10 +50,8 @@ impl SubjectBuilder {
     /// If a subject could not be created or should otherwise not be searched,
     /// then this returns `None` after emitting any relevant log messages.
     pub fn build(&self, dent: DirEntry) -> Option<Subject> {
-        let subj = Subject {
-            dent: dent,
-            strip_dot_prefix: self.config.strip_dot_prefix,
-        };
+        let subj =
+            Subject { dent, strip_dot_prefix: self.config.strip_dot_prefix };
         if let Some(ignore_err) = subj.dent.error() {
             ignore_message!("{}", ignore_err);
         }
