@@ -70,8 +70,8 @@ doing equivalent work:
 | [GNU grep](https://www.gnu.org/software/grep/) | `egrep -r -n --include='*.c' --include='*.h' -w '[A-Z]+_SUSPEND'` | 388 | 0.806s |
 
 And finally, a straight-up comparison between ripgrep, ugrep and GNU grep on a
-single large file
-(~9.3GB, [`OpenSubtitles.raw.en.gz`](http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.raw.en.gz)):
+single large file cached in memory
+(~13GB, [`OpenSubtitles.raw.en.gz`](http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.raw.en.gz)):
 
 | Tool | Command | Line count | Time |
 | ---- | ------- | ---------- | ---- |
