@@ -38,10 +38,11 @@ Please see the [CHANGELOG](CHANGELOG.md) for a release history.
 
 ### Quick examples comparing tools
 
-This example searches the entire Linux kernel source tree (after running
-`make defconfig && make -j8`) for `[A-Z]+_SUSPEND`, where all matches must be
-words. Timings were collected on a system with an Intel i7-6900K 3.2 GHz, and
-ripgrep was compiled with SIMD enabled.
+This example searches the entire
+[Linux kernel source tree](https://github.com/BurntSushi/linux)
+(after running `make defconfig && make -j8`) for `[A-Z]+_SUSPEND`, where
+all matches must be words. Timings were collected on a system with an Intel
+i7-6900K 3.2 GHz.
 
 Please remember that a single benchmark is never enough! See my
 [blog post on ripgrep](https://blog.burntsushi.net/ripgrep/)
@@ -49,40 +50,38 @@ for a very detailed comparison with more benchmarks and analysis.
 
 | Tool | Command | Line count | Time |
 | ---- | ------- | ---------- | ---- |
-| ripgrep (Unicode) | `rg -n -w '[A-Z]+_SUSPEND'` | 450 | **0.106s** |
-| [git grep](https://www.kernel.org/pub/software/scm/git/docs/git-grep.html) | `LC_ALL=C git grep -E -n -w '[A-Z]+_SUSPEND'` | 450 | 0.553s |
-| [The Silver Searcher](https://github.com/ggreer/the_silver_searcher) | `ag -w '[A-Z]+_SUSPEND'` | 450 | 0.589s |
-| [git grep (Unicode)](https://www.kernel.org/pub/software/scm/git/docs/git-grep.html) | `LC_ALL=en_US.UTF-8 git grep -E -n -w '[A-Z]+_SUSPEND'` | 450 | 2.266s |
-| [sift](https://github.com/svent/sift) | `sift --git -n -w '[A-Z]+_SUSPEND'` | 450 | 3.505s |
-| [ack](https://github.com/beyondgrep/ack2) | `ack -w '[A-Z]+_SUSPEND'` | 1878 | 6.823s |
-| [The Platinum Searcher](https://github.com/monochromegane/the_platinum_searcher) | `pt -w -e '[A-Z]+_SUSPEND'` | 450 | 14.208s |
+| ripgrep (Unicode) | `rg -n -w '[A-Z]+_SUSPEND'` | 452 | **0.136s** |
+| [git grep](https://www.kernel.org/pub/software/scm/git/docs/git-grep.html) | `git grep -P -n -w '[A-Z]+_SUSPEND'` | 452 | 0.348s |
+| [ugrep](https://github.com/Genivia/ugrep) | `ugrep -r --ignore-files --no-hidden -I -w '[A-Z]+_SUSPEND'` | 452 | 0.506s |
+| [git grep](https://www.kernel.org/pub/software/scm/git/docs/git-grep.html) | `LC_ALL=C git grep -E -n -w '[A-Z]+_SUSPEND'` | 452 | 1.150s |
+| [The Silver Searcher](https://github.com/ggreer/the_silver_searcher) | `ag -w '[A-Z]+_SUSPEND'` | 452 | 0.654s |
+| [ack](https://github.com/beyondgrep/ack3) | `ack -w '[A-Z]+_SUSPEND'` | 452 | 4.054s |
+| [git grep (Unicode)](https://www.kernel.org/pub/software/scm/git/docs/git-grep.html) | `LC_ALL=en_US.UTF-8 git grep -E -n -w '[A-Z]+_SUSPEND'` | 452 | 4.205s |
 
-(Yes, `ack` [has](https://github.com/beyondgrep/ack2/issues/445) a
-[bug](https://github.com/beyondgrep/ack2/issues/14).)
-
-Here's another benchmark that disregards gitignore files and searches with a
-whitelist instead. The corpus is the same as in the previous benchmark, and the
-flags passed to each command ensure that they are doing equivalent work:
+Here's another benchmark on the same corpus as above that disregards gitignore
+files and searches with a whitelist instead. The corpus is the same as in the
+previous benchmark, and the flags passed to each command ensure that they are
+doing equivalent work:
 
 | Tool | Command | Line count | Time |
 | ---- | ------- | ---------- | ---- |
-| ripgrep | `rg -L -u -tc -n -w '[A-Z]+_SUSPEND'` | 404 | **0.079s** |
-| [ucg](https://github.com/gvansickle/ucg) | `ucg --type=cc -w '[A-Z]+_SUSPEND'` | 390 | 0.163s |
-| [GNU grep](https://www.gnu.org/software/grep/) | `egrep -R -n --include='*.c' --include='*.h' -w '[A-Z]+_SUSPEND'` | 404 | 0.611s |
+| ripgrep | `rg -uuu -tc -n -w '[A-Z]+_SUSPEND'` | 388 | **0.096s** |
+| [ugrep](https://github.com/Genivia/ugrep) | `ugrep -r -n --include='*.c' --include='*.h' -w '[A-Z]+_SUSPEND'` | 388 | 0.493s |
+| [GNU grep](https://www.gnu.org/software/grep/) | `egrep -r -n --include='*.c' --include='*.h' -w '[A-Z]+_SUSPEND'` | 388 | 0.806s |
 
-(`ucg` [has slightly different behavior in the presence of symbolic links](https://github.com/gvansickle/ucg/issues/106).)
-
-And finally, a straight-up comparison between ripgrep and GNU grep on a single
-large file (~9.3GB,
-[`OpenSubtitles2016.raw.en.gz`](http://opus.lingfil.uu.se/OpenSubtitles2016/mono/OpenSubtitles2016.raw.en.gz)):
+And finally, a straight-up comparison between ripgrep, ugrep and GNU grep on a
+single large file
+(~9.3GB, [`OpenSubtitles.raw.en.gz`](http://opus.nlpl.eu/download.php?f=OpenSubtitles/v2018/mono/OpenSubtitles.raw.en.gz)):
 
 | Tool | Command | Line count | Time |
 | ---- | ------- | ---------- | ---- |
-| ripgrep | `rg -w 'Sherlock [A-Z]\w+'` | 5268 | **2.108s** |
-| [GNU grep](https://www.gnu.org/software/grep/) | `LC_ALL=C egrep -w 'Sherlock [A-Z]\w+'` | 5268 | 7.014s |
+| ripgrep | `rg -w 'Sherlock [A-Z]\w+'` | 7882 | **2.769s** |
+| [ugrep](https://github.com/Genivia/ugrep) | `ugrep -w 'Sherlock [A-Z]\w+'` | 7882 | 6.802s |
+| [GNU grep](https://www.gnu.org/software/grep/) | `LC_ALL=en_US.UTF-8 egrep -w 'Sherlock [A-Z]\w+'` | 7882 | 9.027s |
 
 In the above benchmark, passing the `-n` flag (for showing line numbers)
-increases the times to `2.640s` for ripgrep and `10.277s` for GNU grep.
+increases the times to `3.423s` for ripgrep and `13.031s` for GNU grep. ugrep
+times are unaffected by the presence or absence of `-n`.
 
 
 ### Why should I use ripgrep?
