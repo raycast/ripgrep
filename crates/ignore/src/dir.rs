@@ -310,7 +310,7 @@ impl Ignore {
             git_global_matcher: self.0.git_global_matcher.clone(),
             git_ignore_matcher: gi_matcher,
             git_exclude_matcher: gi_exclude_matcher,
-            has_git: has_git,
+            has_git,
             opts: self.0.opts,
         };
         (ig, errs.into_error_option())
@@ -817,9 +817,7 @@ fn resolve_git_commondir(
     let git_commondir_file = || real_git_dir.join("commondir");
     let file = match File::open(git_commondir_file()) {
         Ok(file) => io::BufReader::new(file),
-        Err(err) => {
-            return Err(Some(Error::Io(err).with_path(git_commondir_file())));
-        }
+        Err(_) => return Err(None),
     };
     let commondir_line = match file.lines().next() {
         Some(Ok(line)) => line,

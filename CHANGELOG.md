@@ -1,3 +1,14 @@
+12.0.1 (TBD)
+============
+ripgrep 12.0.1 is a small patch release that includes a couple minor bug fixes.
+These bug fixes address regressions introduced in the 12.0.0 release.
+
+Bug fixes:
+
+* [BUG #1520](https://github.com/BurntSushi/ripgrep/issues/1520):
+  Don't emit spurious error messages in git repositories with submodules.
+
+
 12.0.0 (2020-03-15)
 ===================
 ripgrep 12 is a new major version release of ripgrep that contains many bug
