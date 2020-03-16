@@ -29,7 +29,8 @@ mkdir -p "$DEPLOY_DIR"
 cargo build
 
 # Copy man page and shell completions.
-cp "$OUT_DIR"/{rg.1,rg.bash,rg.fish,_rg} "$DEPLOY_DIR/"
+cp "$OUT_DIR"/{rg.1,rg.bash,rg.fish} "$DEPLOY_DIR/"
+cp complete/_rg "$DEPLOY_DIR/"
 
 # Since we're distributing the dpkg, we don't know whether the user will have
 # PCRE2 installed, so just do a static build.
