@@ -837,7 +837,7 @@ fn resolve_git_commondir(
 #[cfg(test)]
 mod tests {
     use std::fs::{self, File};
-    use std::io::{self, Write};
+    use std::io::Write;
     use std::path::Path;
 
     use dir::IgnoreBuilder;
@@ -1170,22 +1170,9 @@ mod tests {
         // missing commondir file
         assert!(fs::remove_file(commondir_path()).is_ok());
         let (_, err) = ib.add_child(td.path().join("linked-worktree"));
-        assert!(err.is_some());
-        assert!(match err {
-            Some(Error::WithPath { path, err }) => {
-                if path != commondir_path() {
-                    false
-                } else {
-                    match *err {
-                        Error::Io(ioerr) => {
-                            ioerr.kind() == io::ErrorKind::NotFound
-                        }
-                        _ => false,
-                    }
-                }
-            }
-            _ => false,
-        });
+        // We squash the error in this case, because it occurs in repositories
+        // that are not linked worktrees but have submodules.
+        assert!(err.is_none());
 
         wfile(td.path().join("linked-worktree/.git"), "garbage");
         let (_, err) = ib.add_child(td.path().join("linked-worktree"));
@@ -1193,6 +1180,6 @@ mod tests {
 
         wfile(td.path().join("linked-worktree/.git"), "gitdir: garbage");
         let (_, err) = ib.add_child(td.path().join("linked-worktree"));
-        assert!(err.is_some());
+        assert!(err.is_none());
     }
 }
