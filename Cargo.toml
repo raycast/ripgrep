@@ -20,8 +20,8 @@ autotests = false
 edition = "2018"
 
 [badges]
-travis-ci = { repository = "BurntSushi/ripgrep" }
-appveyor = { repository = "BurntSushi/ripgrep" }
+# I guess crates.io does not support GitHub Action badges yet.
+# Tracking PR: https://github.com/rust-lang/crates.io/pull/1838
 
 [[bin]]
 bench = false
