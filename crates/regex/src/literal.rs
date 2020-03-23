@@ -141,6 +141,9 @@ impl LiteralSets {
             // (Not in theory---it could be better. But the current
             // implementation isn't good enough.) ... So we make up for it
             // here.
+            if !word {
+                return None;
+            }
             let p_min_len = self.prefixes.min_len();
             let s_min_len = self.suffixes.min_len();
             let lits = match (p_min_len, s_min_len) {
