@@ -1,7 +1,8 @@
 12.0.1 (2020-03-29)
 ===================
-ripgrep 12.0.1 is a small patch release that includes a couple minor bug fixes.
-These bug fixes address regressions introduced in the 12.0.0 release.
+ripgrep 12.0.1 is a small patch release that includes a minor bug fix relating
+to superfluous error messages when searching git repositories with sub-modules.
+This was a regression introduced in the 12.0.0 release.
 
 Bug fixes:
 
