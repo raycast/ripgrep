@@ -1,5 +1,5 @@
-12.0.1 (TBD)
-============
+12.0.1 (2020-03-29)
+===================
 ripgrep 12.0.1 is a small patch release that includes a couple minor bug fixes.
 These bug fixes address regressions introduced in the 12.0.0 release.
 
