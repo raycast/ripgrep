@@ -87,7 +87,7 @@ jobs:
           rust: nightly-x86_64-gnu
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
 
     - name: Install packages (Ubuntu)
       if: matrix.os == 'ubuntu-18.04'
@@ -184,7 +184,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Install Rust
       uses: actions-rs/toolchain@v1
       with:
