@@ -1,3 +1,11 @@
+TBD
+===
+Bug fixes:
+
+* [BUG #1537](https://github.com/BurntSushi/ripgrep/issues/1537):
+  Fix match bug caused by inner literal optimization.
+
+
 12.0.1 (2020-03-29)
 ===================
 ripgrep 12.0.1 is a small patch release that includes a minor bug fix relating

@@ -326,12 +326,12 @@ fn is_simple(expr: &Hir) -> bool {
         HirKind::Empty
         | HirKind::Literal(_)
         | HirKind::Class(_)
-        | HirKind::Repetition(_)
         | HirKind::Concat(_)
         | HirKind::Alternation(_) => true,
-        HirKind::Anchor(_) | HirKind::WordBoundary(_) | HirKind::Group(_) => {
-            false
-        }
+        HirKind::Anchor(_)
+        | HirKind::WordBoundary(_)
+        | HirKind::Group(_)
+        | HirKind::Repetition(_) => false,
     }
 }
 
@@ -412,8 +412,17 @@ mod tests {
         // https://github.com/BurntSushi/ripgrep/issues/1319
         assert_eq!(
             one_regex(r"TTGAGTCCAGGAG[ATCG]{2}C"),
-            pat("TTGAGTCCAGGAGA|TTGAGTCCAGGAGC|\
-                 TTGAGTCCAGGAGG|TTGAGTCCAGGAGT")
+            pat("TTGAGTCCAGGAG"),
         );
+    }
+
+    #[test]
+    fn regression_1537() {
+        // Regression from:
+        // https://github.com/BurntSushi/ripgrep/issues/1537
+        assert_eq!(one_regex(r";(.*,)"), pat(";"));
+        assert_eq!(one_regex(r";((.*,))"), pat(";"));
+        assert_eq!(one_regex(r";(.*,)+"), pat(";"),);
+        assert_eq!(one_regex(r";(.*,){1}"), pat(";"),);
     }
 }

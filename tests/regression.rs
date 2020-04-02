@@ -791,3 +791,11 @@ rgtest!(
         eqnice!("repotree/not-ignored\n", cmd.stdout());
     }
 );
+
+// See: https://github.com/BurntSushi/ripgrep/issues/1537
+rgtest!(r1537, |dir: Dir, mut cmd: TestCommand| {
+    dir.create("foo", "abc;de,fg");
+
+    let expected = "foo:abc;de,fg\n";
+    eqnice!(expected, cmd.arg(";(.*,){1}").stdout());
+});
