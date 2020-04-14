@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: An issue with ripgrep or any of its crates (ignore, globset, etc.)
+title: ''
+labels: ''
+assignees: ''
+---
+
+
 #### What version of ripgrep are you using?
 
 Replace this text with the output of `rg --version`.
