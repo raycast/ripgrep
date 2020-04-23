@@ -799,3 +799,26 @@ rgtest!(r1537, |dir: Dir, mut cmd: TestCommand| {
     let expected = "foo:abc;de,fg\n";
     eqnice!(expected, cmd.arg(";(.*,){1}").stdout());
 });
+
+// See: https://github.com/BurntSushi/ripgrep/issues/1559
+rgtest!(r1559, |dir: Dir, mut cmd: TestCommand| {
+    dir.create(
+        "foo",
+        "\
+type A struct {
+	TaskID int `json:\"taskID\"`
+}
+
+type B struct {
+	ObjectID string `json:\"objectID\"`
+	TaskID   int    `json:\"taskID\"`
+}
+",
+    );
+
+    let expected = "\
+foo:	TaskID int `json:\"taskID\"`
+foo:	TaskID   int    `json:\"taskID\"`
+";
+    eqnice!(expected, cmd.arg("TaskID +int").stdout());
+});
