@@ -399,7 +399,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "ripgrep"
-version = "12.0.1"
+version = "12.1.0"
 dependencies = [
  "bstr 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
