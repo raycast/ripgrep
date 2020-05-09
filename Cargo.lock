@@ -142,7 +142,7 @@ dependencies = [
 
 [[package]]
 name = "grep"
-version = "0.2.5"
+version = "0.2.6"
 dependencies = [
  "grep-cli 0.1.4",
  "grep-matcher 0.1.4",
@@ -403,7 +403,7 @@ version = "12.0.1"
 dependencies = [
  "bstr 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "grep 0.2.5",
+ "grep 0.2.6",
  "ignore 0.4.15",
  "jemallocator 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
