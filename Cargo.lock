@@ -147,7 +147,7 @@ dependencies = [
  "grep-cli 0.1.4",
  "grep-matcher 0.1.4",
  "grep-pcre2 0.1.4",
- "grep-printer 0.1.4",
+ "grep-printer 0.1.5",
  "grep-regex 0.1.8",
  "grep-searcher 0.1.7",
  "termcolor 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -187,7 +187,7 @@ dependencies = [
 
 [[package]]
 name = "grep-printer"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "base64 0.12.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "bstr 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
