@@ -2,6 +2,8 @@ Release Checklist
 -----------------
 * Run `cargo update` and review dependency updates. Commit updated
   `Cargo.lock`.
+* Run `cargo outdated` and review semver incompatible updates. Unless there is
+  a strong motivation otherwise, review and update every dependency.
 * Review changes for every crate in `crates` since the last ripgrep release.
   If the set of changes is non-empty, issue a new release for that crate.
 * Edit the `Cargo.toml` to set the new ripgrep version. Run
