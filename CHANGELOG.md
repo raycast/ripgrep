@@ -31,6 +31,8 @@ Bug fixes:
   Fix match bug caused by inner literal optimization.
 * [BUG #1544](https://github.com/BurntSushi/ripgrep/issues/1544):
   ripgrep now uses `asciidoctor` instead of `a2x` to generate its man page.
+* [BUG #1550](https://github.com/BurntSushi/ripgrep/issues/1550):
+  Substantially reduce peak memory usage when searching wide directories.
 * [BUG #1571](https://github.com/BurntSushi/ripgrep/issues/1571):
   Add note about configuration files in `--type-{add,clear}` docs.
 * [BUG #1573](https://github.com/BurntSushi/ripgrep/issues/1573):
