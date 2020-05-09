@@ -1,7 +1,8 @@
-TBD
-===
+12.1.0 (2020-05-09)
+===================
 ripgrep 12.1.0 is a small minor version release that mostly includes bug fixes
-and documentation improvements.
+and documentation improvements. This release also contains some important
+notices for downstream packagers.
 
 **Notices for downstream ripgrep package maintainers:**
 
