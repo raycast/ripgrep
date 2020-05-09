@@ -21,15 +21,22 @@ Release Checklist
     * crates/core (do **not** bump version, but update dependencies as needed)
 * Edit the `Cargo.toml` to set the new ripgrep version. Run
   `cargo update -p ripgrep` so that the `Cargo.lock` is updated. Commit the
-  changes. Alternatively, use
-  `cargo-up --no-push --no-release Cargo.toml {VERSION}`.
-* Create a new signed tag for the ripgrep release. Push it to GitHub.
+  changes and create a new signed tag. Alternatively, use
+  `cargo-up --no-push --no-release Cargo.toml {VERSION}` to automate this.
 * Wait for CI to finish creating the release. If the release build fails, then
   delete the tag from GitHub, make fixes, re-tag, delete the release and push.
 * Copy the relevant section of the CHANGELOG to the tagged release notes.
+  Include this blurb describing what ripgrep is:
+  > In case you haven't heard of it before, ripgrep is a line-oriented search
+  > tool that recursively searches your current directory for a regex pattern.
+  > By default, ripgrep will respect your `.gitignore` and automatically skip
+  > hidden files/directories and binary files.
 * Run `ci/build-deb` locally and manually upload the deb package to the
   release.
 * Run `cargo publish`.
-* Run `ci/sha256-releases >> pkg/brew/ripgrep-bin.rb`. Then edit
-  `pkg/brew/ripgrep-bin.rb` to update the version numbers and sha256 hashes.
+* Run `ci/sha256-releases {VERSION} >> pkg/brew/ripgrep-bin.rb`. Then edit
+  `pkg/brew/ripgrep-bin.rb` to update the version number and sha256 hashes.
   Remove extraneous stuff added by `ci/sha256-releases`. Commit changes.
+
+Note that
+[`cargo-up` can be found in BurntSushi's dotfiles](https://github.com/BurntSushi/dotfiles/blob/master/bin/cargo-up).
