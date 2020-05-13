@@ -217,6 +217,10 @@ fn formatted_doc_txt(arg: &RGArg) -> io::Result<String> {
         .doc_long
         .replace("{", "&#123;")
         .replace("}", r"&#125;")
+        // Hack to render ** literally in man page correctly. We can't put
+        // these crazy +++ in the help text directly, since that shows
+        // literally in --help output.
+        .replace("*-g 'foo/**'*", "*-g +++'foo/**'+++*")
         .split("\n\n")
         .map(|s| s.to_string())
         .collect();

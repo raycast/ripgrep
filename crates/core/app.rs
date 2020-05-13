@@ -1354,7 +1354,7 @@ command line takes precedence.
 When this flag is set, every file and directory is applied to it to test for
 a match. So for example, if you only want to search in a particular directory
 'foo', then *-g foo* is incorrect because 'foo/bar' does not match the glob
-'foo'. Instead, you should use *-g +++'foo/**'+++*.
+'foo'. Instead, you should use *-g 'foo/**'*.
 "
     );
     let arg = RGArg::flag("glob", "GLOB")

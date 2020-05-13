@@ -1,3 +1,13 @@
+TBD
+===
+Unreleased changes. Release notes have not yet been written.
+
+Bug fixes:
+
+* [BUG #1581](https://github.com/BurntSushi/ripgrep/issues/1581):
+  Corrects some egregious markup output in `--help`.
+
+
 12.1.0 (2020-05-09)
 ===================
 ripgrep 12.1.0 is a small minor version release that mostly includes bug fixes
