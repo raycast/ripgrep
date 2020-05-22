@@ -6,6 +6,8 @@ Bug fixes:
 
 * [BUG #1581](https://github.com/BurntSushi/ripgrep/issues/1581):
   Corrects some egregious markup output in `--help`.
+* [BUG #1591](https://github.com/BurntSushi/ripgrep/issues/1591):
+  Mention the special `$0` capture group in docs for the `-r/--replace` flag.
 
 
 12.1.0 (2020-05-09)

@@ -2576,10 +2576,13 @@ Replace every match with the text given when printing results. Neither this
 flag nor any other ripgrep flag will modify your files.
 
 Capture group indices (e.g., $5) and names (e.g., $foo) are supported in the
-replacement string. In shells such as Bash and zsh, you should wrap the
-pattern in single quotes instead of double quotes. Otherwise, capture group
-indices will be replaced by expanded shell variables which will most likely
-be empty.
+replacement string. Capture group indices are numbered based on the position of
+the opening paranthesis of the group, where the leftmost such group is $1. The
+special $0 group corresponds to the entire match.
+
+In shells such as Bash and zsh, you should wrap the pattern in single quotes
+instead of double quotes. Otherwise, capture group indices will be replaced by
+expanded shell variables which will most likely be empty.
 
 To write a literal '$', use '$$'.
 
