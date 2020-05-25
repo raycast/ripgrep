@@ -346,7 +346,7 @@ impl Args {
         Ok(self.matches().walker_builder(self.paths())?.build())
     }
 
-    /// Return a walker that never uses additional threads.
+    /// Return a parallel walker that may use additional threads.
     pub fn walker_parallel(&self) -> Result<WalkParallel> {
         Ok(self.matches().walker_builder(self.paths())?.build_parallel())
     }
