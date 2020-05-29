@@ -38,6 +38,12 @@ Release Checklist
 * Run `ci/sha256-releases {VERSION} >> pkg/brew/ripgrep-bin.rb`. Then edit
   `pkg/brew/ripgrep-bin.rb` to update the version number and sha256 hashes.
   Remove extraneous stuff added by `ci/sha256-releases`. Commit changes.
+* Add TBD section to the top of the CHANGELOG:
+  ```
+  TBD
+  ===
+  Unreleased changes. Release notes have not yet been written.
+  ```
 
 Note that
 [`cargo-up` can be found in BurntSushi's dotfiles](https://github.com/BurntSushi/dotfiles/blob/master/bin/cargo-up).

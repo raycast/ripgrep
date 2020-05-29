@@ -1,3 +1,8 @@
+TBD
+===
+Unreleased changes. Release notes have not yet been written.
+
+
 12.1.1 (2020-05-29)
 ===================
 ripgrep 12.1.1 is a patch release that fixes a couple small bugs. In
