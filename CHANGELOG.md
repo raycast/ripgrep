@@ -1,6 +1,10 @@
-TBD
-===
-Unreleased changes. Release notes have not yet been written.
+12.1.1 (2020-05-29)
+===================
+ripgrep 12.1.1 is a patch release that fixes a couple small bugs. In
+particular, the ripgrep 12.1.0 release did not tag new releases for all of its
+in-tree dependencies. As a result, ripgrep built dependencies from crates.io
+would produce a different build than compiling ripgrep from source on the
+`12.1.0` tag. Namely, some crates like `grep-cli` had unreleased changes.
 
 Bug fixes:
 
@@ -8,6 +12,8 @@ Bug fixes:
   Corrects some egregious markup output in `--help`.
 * [BUG #1591](https://github.com/BurntSushi/ripgrep/issues/1591):
   Mention the special `$0` capture group in docs for the `-r/--replace` flag.
+* [BUG #1602](https://github.com/BurntSushi/ripgrep/issues/1602):
+  Fix failing test resulting from out-of-sync dependencies.
 
 
 12.1.0 (2020-05-09)
