@@ -19,6 +19,7 @@ Release Checklist
     * crates/printer
     * crates/grep (bump minimal versions as necessary)
     * crates/core (do **not** bump version, but update dependencies as needed)
+* Update the CHANGELOG as appropriate.
 * Edit the `Cargo.toml` to set the new ripgrep version. Run
   `cargo update -p ripgrep` so that the `Cargo.lock` is updated. Commit the
   changes and create a new signed tag. Alternatively, use
@@ -29,8 +30,8 @@ Release Checklist
   Include this blurb describing what ripgrep is:
   > In case you haven't heard of it before, ripgrep is a line-oriented search
   > tool that recursively searches your current directory for a regex pattern.
-  > By default, ripgrep will respect your `.gitignore` and automatically skip
-  > hidden files/directories and binary files.
+  > By default, ripgrep will respect your gitignore rules and automatically
+  > skip hidden files/directories and binary files.
 * Run `ci/build-deb` locally and manually upload the deb package to the
   release.
 * Run `cargo publish`.
