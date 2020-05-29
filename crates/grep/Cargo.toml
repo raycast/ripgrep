@@ -13,7 +13,7 @@ keywords = ["regex", "grep", "egrep", "search", "pattern"]
 license = "Unlicense/MIT"
 
 [dependencies]
-grep-cli = { version = "0.1.4", path = "../cli" }
+grep-cli = { version = "0.1.5", path = "../cli" }
 grep-matcher = { version = "0.1.4", path = "../matcher" }
 grep-pcre2 = { version = "0.1.4", path = "../pcre2", optional = true }
 grep-printer = { version = "0.1.5", path = "../printer" }
