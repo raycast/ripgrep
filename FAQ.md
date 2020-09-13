@@ -9,6 +9,7 @@
 * [How do I configure ripgrep's colors?](#colors)
 * [How do I enable true colors on Windows?](#truecolors-windows)
 * [How do I stop ripgrep from messing up colors when I kill it?](#stop-ripgrep)
+* [Why does using a leading `/` on Windows fail?](#because-cygwin)
 * [How can I get results in a consistent order?](#order)
 * [How do I search files that aren't UTF-8?](#encoding)
 * [How do I search compressed files?](#compressed)
@@ -313,6 +314,26 @@ was later deprecated in
 [#281](https://github.com/BurntSushi/ripgrep/issues/281). A full explanation is
 available
 [here](https://github.com/BurntSushi/ripgrep/issues/281#issuecomment-269093893).
+
+
+<h3 name="because-cygwin">
+Why does using a leading `/` on Windows fail?
+</h3>
+
+If you're using cygwin on Windows and try to search for a pattern beginning
+with a `/`, then it's possible that cygwin is mangling that pattern without
+your knowledge. For example, if you tried running `rg /foo` in a cygwin shell
+on Windows, then cygwin might mistakenly perform path translation on `/foo`,
+which would result in `rg C:/msys64/foo` being searched instead.
+
+You can fix this in one of three ways:
+
+1. Stop using cygwin.
+2. Escape the leading slash with an additional slash. e.g., `rg //foo`.
+3. Temporarily disable path translation by setting `MSYS_NO_PATHCONV=1`. e.g.,
+   `MSYS_NO_PATHCONV=1 rg /foo`.
+
+For more details, see https://github.com/BurntSushi/ripgrep/issues/1277
 
 
 <h3 name="size-limit">

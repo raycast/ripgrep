@@ -2,6 +2,11 @@ TBD
 ===
 Unreleased changes. Release notes have not yet been written.
 
+Bug fixes:
+
+* [BUG #1277](https://github.com/BurntSushi/ripgrep/issues/1277):
+  Document cygwin path translation behavior in the FAQ.
+
 
 12.1.1 (2020-05-29)
 ===================
