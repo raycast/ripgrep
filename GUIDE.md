@@ -377,7 +377,7 @@ make: *.mak, *.mk, GNUmakefile, Gnumakefile, Makefile, gnumakefile, makefile
 By default, ripgrep comes with a bunch of pre-defined types. Generally, these
 types correspond to well known public formats. But you can define your own
 types as well. For example, perhaps you frequently search "web" files, which
-consist of Javascript, HTML and CSS:
+consist of JavaScript, HTML and CSS:
 
 ```
 $ rg --type-add 'web:*.html' --type-add 'web:*.css' --type-add 'web:*.js' -tweb title

@@ -894,7 +894,7 @@ class Result(object):
         '''
         Create a new set of results, initially empty.
 
-        :param Benchmarl benchmark:
+        :param Benchmark benchmark:
             The benchmark that produced these results.
         '''
         self.benchmark = benchmark

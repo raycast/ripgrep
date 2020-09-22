@@ -1275,7 +1275,7 @@ Bug fixes:
 =====
 Feature enhancements:
 
-* Added or improved file type filtering for VB, R, F#, Swift, Nim, Javascript,
+* Added or improved file type filtering for VB, R, F#, Swift, Nim, JavaScript,
   TypeScript
 * [FEATURE #20](https://github.com/BurntSushi/ripgrep/issues/20):
   Adds a --no-filename flag.

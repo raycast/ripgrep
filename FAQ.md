@@ -892,7 +892,7 @@ The reason why ripgrep is dual licensed this way is two-fold:
 1. I, as ripgrep's author, would like to participate in a small bit of
    ideological activism by promoting the Unlicense's goal: to disclaim
    copyright monopoly interest.
-2. I, as ripgrep's author, would like as many people to use rigprep as
+2. I, as ripgrep's author, would like as many people to use ripgrep as
    possible. Since the Unlicense is not a proven or well known license, ripgrep
    is also offered under the MIT license, which is ubiquitous and accepted by
    almost everyone.

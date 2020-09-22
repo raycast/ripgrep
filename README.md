@@ -97,7 +97,7 @@ times are unaffected by the presence or absence of `-n`.
   whereas there are many bugs related to that functionality in other code
   search tools claiming to provide the same functionality.
 * ripgrep can search specific types of files. For example, `rg -tpy foo`
-  limits your search to Python files and `rg -Tjs foo` excludes Javascript
+  limits your search to Python files and `rg -Tjs foo` excludes JavaScript
   files from your search. ripgrep can be taught about new file types with
   custom matching rules.
 * ripgrep supports many features found in `grep`, such as showing the context
