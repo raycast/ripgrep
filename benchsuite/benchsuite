@@ -359,10 +359,8 @@ def bench_subtitles_en_literal_casei(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-i', pat, en]),
-        Command('grep', ['grep', '-ai', pat, en], env=GREP_UNICODE),
-        Command('grep (ASCII)', [
-            'grep', '-E', '-ai', pat, en,
-        ], env=GREP_ASCII),
+        Command('grep', ['grep', '-i', pat, en], env=GREP_UNICODE),
+        Command('grep (ASCII)', ['grep', '-E', '-i', pat, en], env=GREP_ASCII),
         Command('rg (lines)', ['rg', '-n', '-i', pat, en]),
         Command('ag (lines) (ASCII)', ['ag', '-i', pat, en]),
     ])
@@ -381,11 +379,9 @@ def bench_subtitles_en_literal_word(suite_dir):
             'rg', '-n', r'(?-u:\b)' + pat + r'(?-u:\b)', en,
         ]),
         Command('ag (ASCII)', ['ag', '-sw', pat, en]),
-        Command('grep (ASCII)', [
-            'grep', '-anw', pat, en,
-        ], env=GREP_ASCII),
+        Command('grep (ASCII)', ['grep', '-nw', pat, en], env=GREP_ASCII),
         Command('rg', ['rg', '-nw', pat, en]),
-        Command('grep', ['grep', '-anw', pat, en], env=GREP_UNICODE),
+        Command('grep', ['grep', '-nw', pat, en], env=GREP_UNICODE),
     ])
 
 
@@ -406,13 +402,9 @@ def bench_subtitles_en_alternate(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('rg (lines)', ['rg', '-n', pat, en]),
         Command('ag (lines)', ['ag', '-s', pat, en]),
-        Command('grep (lines)', [
-            'grep', '-E', '-an', pat, en,
-        ], env=GREP_ASCII),
+        Command('grep (lines)', ['grep', '-E', '-n', pat, en], env=GREP_ASCII),
         Command('rg', ['rg', pat, en]),
-        Command('grep', [
-            'grep', '-E', '-a', pat, en,
-        ], env=GREP_ASCII),
+        Command('grep', ['grep', '-E', pat, en], env=GREP_ASCII),
     ])
 
 
@@ -433,10 +425,10 @@ def bench_subtitles_en_alternate_casei(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('ag (ASCII)', ['ag', '-s', '-i', pat, en]),
         Command('grep (ASCII)', [
-            'grep', '-E', '-ani', pat, en,
+            'grep', '-E', '-ni', pat, en,
         ], env=GREP_ASCII),
         Command('rg', ['rg', '-n', '-i', pat, en]),
-        Command('grep', ['grep', '-E', '-ani', pat, en], env=GREP_UNICODE),
+        Command('grep', ['grep', '-E', '-ni', pat, en], env=GREP_UNICODE),
     ])
 
 
@@ -450,12 +442,10 @@ def bench_subtitles_en_surrounding_words(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-n', pat, en]),
-        Command('grep', ['grep', '-E', '-an', pat, en], env=GREP_UNICODE),
+        Command('grep', ['grep', '-E', '-n', pat, en], env=GREP_UNICODE),
         Command('rg (ASCII)', ['rg', '-n', '(?-u)' + pat, en]),
         Command('ag (ASCII)', ['ag', '-s', pat, en]),
-        Command('grep (ASCII)', [
-            'grep', '-E', '-an', pat, en,
-        ], env=GREP_ASCII),
+        Command('grep (ASCII)', ['grep', '-E', '-n', pat, en], env=GREP_ASCII),
     ])
 
 
@@ -476,9 +466,7 @@ def bench_subtitles_en_no_literal(suite_dir):
         Command('rg', ['rg', '-n', pat, en]),
         Command('rg (ASCII)', ['rg', '-n', '(?-u)' + pat, en]),
         Command('ag (ASCII)', ['ag', '-s', pat, en]),
-        Command('grep (ASCII)', [
-            'grep', '-E', '-an', pat, en,
-        ], env=GREP_ASCII),
+        Command('grep (ASCII)', ['grep', '-E', '-n', pat, en], env=GREP_ASCII),
     ])
 
 
@@ -493,10 +481,10 @@ def bench_subtitles_ru_literal(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', pat, ru]),
         Command('rg (no mmap)', ['rg', '--no-mmap', pat, ru]),
-        Command('grep', ['grep', '-a', pat, ru], env=GREP_ASCII),
+        Command('grep', ['grep', pat, ru], env=GREP_ASCII),
         Command('rg (lines)', ['rg', '-n', pat, ru]),
         Command('ag (lines)', ['ag', '-s', pat, ru]),
-        Command('grep (lines)', ['grep', '-an', pat, ru], env=GREP_ASCII),
+        Command('grep (lines)', ['grep', '-n', pat, ru], env=GREP_ASCII),
     ])
 
 
@@ -510,10 +498,8 @@ def bench_subtitles_ru_literal_casei(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-i', pat, ru]),
-        Command('grep', ['grep', '-ai', pat, ru], env=GREP_UNICODE),
-        Command('grep (ASCII)', [
-            'grep', '-E', '-ai', pat, ru,
-        ], env=GREP_ASCII),
+        Command('grep', ['grep', '-i', pat, ru], env=GREP_UNICODE),
+        Command('grep (ASCII)', ['grep', '-E', '-i', pat, ru], env=GREP_ASCII),
         Command('rg (lines)', ['rg', '-n', '-i', pat, ru]),
         Command('ag (lines) (ASCII)', ['ag', '-i', pat, ru]),
     ])
@@ -533,10 +519,10 @@ def bench_subtitles_ru_literal_word(suite_dir):
         ]),
         Command('ag (ASCII)', ['ag', '-sw', pat, ru]),
         Command('grep (ASCII)', [
-            'grep', '-anw', pat, ru,
+            'grep', '-nw', pat, ru,
         ], env=GREP_ASCII),
         Command('rg', ['rg', '-nw', pat, ru]),
-        Command('grep', ['grep', '-anw', pat, ru], env=GREP_UNICODE),
+        Command('grep', ['grep', '-nw', pat, ru], env=GREP_UNICODE),
     ])
 
 
@@ -557,13 +543,9 @@ def bench_subtitles_ru_alternate(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('rg (lines)', ['rg', '-n', pat, ru]),
         Command('ag (lines)', ['ag', '-s', pat, ru]),
-        Command('grep (lines)', [
-            'grep', '-E', '-an', pat, ru,
-        ], env=GREP_ASCII),
+        Command('grep (lines)', ['grep', '-E', '-n', pat, ru], env=GREP_ASCII),
         Command('rg', ['rg', pat, ru]),
-        Command('grep', [
-            'grep', '-E', '-a', pat, ru,
-        ], env=GREP_ASCII),
+        Command('grep', ['grep', '-E', pat, ru], env=GREP_ASCII),
     ])
 
 
@@ -584,10 +566,10 @@ def bench_subtitles_ru_alternate_casei(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('ag (ASCII)', ['ag', '-s', '-i', pat, ru]),
         Command('grep (ASCII)', [
-            'grep', '-E', '-ani', pat, ru,
+            'grep', '-E', '-ni', pat, ru,
         ], env=GREP_ASCII),
         Command('rg', ['rg', '-n', '-i', pat, ru]),
-        Command('grep', ['grep', '-E', '-ani', pat, ru], env=GREP_UNICODE),
+        Command('grep', ['grep', '-E', '-ni', pat, ru], env=GREP_UNICODE),
     ])
 
 
@@ -601,11 +583,9 @@ def bench_subtitles_ru_surrounding_words(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-n', pat, ru]),
-        Command('grep', ['grep', '-E', '-an', pat, ru], env=GREP_UNICODE),
+        Command('grep', ['grep', '-E', '-n', pat, ru], env=GREP_UNICODE),
         Command('ag (ASCII)', ['ag', '-s', pat, ru]),
-        Command('grep (ASCII)', [
-            'grep', '-E', '-an', pat, ru,
-        ], env=GREP_ASCII),
+        Command('grep (ASCII)', ['grep', '-E', '-n', pat, ru], env=GREP_ASCII),
     ])
 
 
@@ -626,9 +606,7 @@ def bench_subtitles_ru_no_literal(suite_dir):
         Command('rg', ['rg', '-n', pat, ru]),
         Command('rg (ASCII)', ['rg', '-n', '(?-u)' + pat, ru]),
         Command('ag (ASCII)', ['ag', '-s', pat, ru]),
-        Command('grep (ASCII)', [
-            'grep', '-E', '-an', pat, ru,
-        ], env=GREP_ASCII),
+        Command('grep (ASCII)', ['grep', '-E', '-n', pat, ru], env=GREP_ASCII),
     ])
 
 
