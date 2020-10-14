@@ -57,8 +57,10 @@ def bench_linux_literal_default(suite_dir):
     Benchmark the speed of a literal using *default* settings.
 
     This is a purposefully unfair benchmark for use in performance
-    analysis, but it is pedagogically useful to demonstrate how
-    default behaviors differ.
+    analysis, but it is pedagogically useful to demonstrate how default
+    behaviors differ. For example, ugrep and grep don't do any smart
+    filtering by default, so they will invariably search more files
+    than ripgrep, ag or git grep.
     '''
     require(suite_dir, 'linux')
     cwd = path.join(suite_dir, LINUX_DIR)
@@ -73,7 +75,9 @@ def bench_linux_literal_default(suite_dir):
         mkcmd('ag', ['ag', pat]),
         # I guess setting LC_ALL=en_US.UTF-8 probably isn't necessarily the
         # default, but I'd guess it to be on most desktop systems.
-        mkcmd('git grep', ['git', 'grep', pat], env={'LC_ALL': 'en_US.UTF-8'}),
+        mkcmd('git grep', ['git', 'grep', pat], env=GREP_UNICODE),
+        mkcmd('ugrep', ['ugrep', '-r', pat, './']),
+        mkcmd('grep', ['grep', '-r', pat, './'], env=GREP_UNICODE),
     ])
 
 
@@ -101,6 +105,10 @@ def bench_linux_literal(suite_dir):
         mkcmd('git grep', [
             'git', 'grep', '-I', '-n', pat,
         ], env={'LC_ALL': 'C'}),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', pat, './',
+        ])
     ])
 
 
@@ -130,6 +138,10 @@ def bench_linux_literal_casei(suite_dir):
         mkcmd('git grep', [
             'git', 'grep', '-I', '-n', '-i', pat,
         ], env={'LC_ALL': 'C'}),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', '-i', pat, './',
+        ])
     ])
 
 
@@ -153,6 +165,10 @@ def bench_linux_re_literal_suffix(suite_dir):
             ['git', 'grep', '-E', '-I', '-n', pat],
             env={'LC_ALL': 'C'},
         ),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', pat, './',
+        ])
     ])
 
 
@@ -176,6 +192,10 @@ def bench_linux_word(suite_dir):
             ['git', 'grep', '-E', '-I', '-n', '-w', pat],
             env={'LC_ALL': 'C'},
         ),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', '-w', pat, './',
+        ])
     ])
 
 
@@ -193,6 +213,10 @@ def bench_linux_unicode_greek(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         mkcmd('rg', ['rg', '-n', pat]),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', pat, './',
+        ])
     ])
 
 
@@ -212,6 +236,10 @@ def bench_linux_unicode_greek_casei(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         mkcmd('rg', ['rg', '-n', '-i', pat]),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', '-i', pat, './',
+        ])
     ])
 
 
@@ -245,6 +273,14 @@ def bench_linux_unicode_word(suite_dir):
             ['git', 'grep', '-E', '-I', '-n', pat],
             env={'LC_ALL': 'C'},
         ),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', pat, './',
+        ]),
+        mkcmd('ugrep (ASCII)', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', '-U', pat, './',
+        ]),
     ])
 
 
@@ -279,6 +315,14 @@ def bench_linux_no_literal(suite_dir):
             ['git', 'grep', '-E', '-I', '-n', pat],
             env={'LC_ALL': 'C'},
         ),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', pat, './',
+        ]),
+        mkcmd('ugrep (ASCII)', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', '-U', pat, './',
+        ]),
     ])
 
 
@@ -307,6 +351,10 @@ def bench_linux_alternates(suite_dir):
             ['git', 'grep', '-E', '-I', '-n', pat],
             env={'LC_ALL': 'C'},
         ),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', pat, './',
+        ])
     ])
 
 
@@ -328,6 +376,10 @@ def bench_linux_alternates_casei(suite_dir):
             ['git', 'grep', '-E', '-I', '-n', '-i', pat],
             env={'LC_ALL': 'C'},
         ),
+        mkcmd('ugrep', [
+            'ugrep', '-r', '--ignore-files', '--no-hidden', '-I',
+            '-n', '-i', pat, './',
+        ])
     ])
 
 
@@ -346,6 +398,7 @@ def bench_subtitles_en_literal(suite_dir):
         Command('rg (lines)', ['rg', '-n', pat, en]),
         Command('ag (lines)', ['ag', '-s', pat, en]),
         Command('grep (lines)', ['grep', '-n', pat, en], env=GREP_ASCII),
+        Command('ugrep (lines)', ['ugrep', '-n', pat, en])
     ])
 
 
@@ -363,6 +416,7 @@ def bench_subtitles_en_literal_casei(suite_dir):
         Command('grep (ASCII)', ['grep', '-E', '-i', pat, en], env=GREP_ASCII),
         Command('rg (lines)', ['rg', '-n', '-i', pat, en]),
         Command('ag (lines) (ASCII)', ['ag', '-i', pat, en]),
+        Command('ugrep (lines)', ['ugrep', '-n', '-i', pat, en])
     ])
 
 
@@ -380,6 +434,7 @@ def bench_subtitles_en_literal_word(suite_dir):
         ]),
         Command('ag (ASCII)', ['ag', '-sw', pat, en]),
         Command('grep (ASCII)', ['grep', '-nw', pat, en], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-nw', pat, en]),
         Command('rg', ['rg', '-nw', pat, en]),
         Command('grep', ['grep', '-nw', pat, en], env=GREP_UNICODE),
     ])
@@ -403,6 +458,7 @@ def bench_subtitles_en_alternate(suite_dir):
         Command('rg (lines)', ['rg', '-n', pat, en]),
         Command('ag (lines)', ['ag', '-s', pat, en]),
         Command('grep (lines)', ['grep', '-E', '-n', pat, en], env=GREP_ASCII),
+        Command('ugrep (lines)', ['ugrep', '-n', pat, en]),
         Command('rg', ['rg', pat, en]),
         Command('grep', ['grep', '-E', pat, en], env=GREP_ASCII),
     ])
@@ -427,6 +483,7 @@ def bench_subtitles_en_alternate_casei(suite_dir):
         Command('grep (ASCII)', [
             'grep', '-E', '-ni', pat, en,
         ], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-n', '-i', pat, en]),
         Command('rg', ['rg', '-n', '-i', pat, en]),
         Command('grep', ['grep', '-E', '-ni', pat, en], env=GREP_UNICODE),
     ])
@@ -443,9 +500,11 @@ def bench_subtitles_en_surrounding_words(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-n', pat, en]),
         Command('grep', ['grep', '-E', '-n', pat, en], env=GREP_UNICODE),
+        Command('ugrep', ['ugrep', '-n', pat, en]),
         Command('rg (ASCII)', ['rg', '-n', '(?-u)' + pat, en]),
         Command('ag (ASCII)', ['ag', '-s', pat, en]),
         Command('grep (ASCII)', ['grep', '-E', '-n', pat, en], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-n', '-U', pat, en])
     ])
 
 
@@ -464,9 +523,11 @@ def bench_subtitles_en_no_literal(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-n', pat, en]),
+        Command('ugrep', ['ugrep', '-n', pat, en]),
         Command('rg (ASCII)', ['rg', '-n', '(?-u)' + pat, en]),
         Command('ag (ASCII)', ['ag', '-s', pat, en]),
         Command('grep (ASCII)', ['grep', '-E', '-n', pat, en], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-n', '-U', pat, en])
     ])
 
 
@@ -485,6 +546,7 @@ def bench_subtitles_ru_literal(suite_dir):
         Command('rg (lines)', ['rg', '-n', pat, ru]),
         Command('ag (lines)', ['ag', '-s', pat, ru]),
         Command('grep (lines)', ['grep', '-n', pat, ru], env=GREP_ASCII),
+        Command('ugrep (lines)', ['ugrep', '-n', pat, ru])
     ])
 
 
@@ -502,6 +564,7 @@ def bench_subtitles_ru_literal_casei(suite_dir):
         Command('grep (ASCII)', ['grep', '-E', '-i', pat, ru], env=GREP_ASCII),
         Command('rg (lines)', ['rg', '-n', '-i', pat, ru]),
         Command('ag (lines) (ASCII)', ['ag', '-i', pat, ru]),
+        Command('ugrep (lines) (ASCII)', ['ugrep', '-n', '-i', pat, ru])
     ])
 
 
@@ -515,12 +578,17 @@ def bench_subtitles_ru_literal_word(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg (ASCII)', [
-            'rg', '-n', r'(?-u:\b)' + pat + r'(?-u:\b)', ru,
+            # You might think we'd use \b here for word boundaries, but both
+            # GNU grep and ripgrep implement -w with the formulation below.
+            # Since we can't use Unicode in a pattern and disable Unicode word
+            # boundaries, we just hand-jam this ourselves.
+            'rg', '-n', r'(?-u:^|\W)' + pat + r'(?-u:$|\W)', ru,
         ]),
         Command('ag (ASCII)', ['ag', '-sw', pat, ru]),
         Command('grep (ASCII)', [
             'grep', '-nw', pat, ru,
         ], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-nw', pat, ru]),
         Command('rg', ['rg', '-nw', pat, ru]),
         Command('grep', ['grep', '-nw', pat, ru], env=GREP_UNICODE),
     ])
@@ -544,6 +612,7 @@ def bench_subtitles_ru_alternate(suite_dir):
         Command('rg (lines)', ['rg', '-n', pat, ru]),
         Command('ag (lines)', ['ag', '-s', pat, ru]),
         Command('grep (lines)', ['grep', '-E', '-n', pat, ru], env=GREP_ASCII),
+        Command('ugrep (lines)', ['ugrep', '-n', pat, ru]),
         Command('rg', ['rg', pat, ru]),
         Command('grep', ['grep', '-E', pat, ru], env=GREP_ASCII),
     ])
@@ -568,6 +637,7 @@ def bench_subtitles_ru_alternate_casei(suite_dir):
         Command('grep (ASCII)', [
             'grep', '-E', '-ni', pat, ru,
         ], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-n', '-i', pat, ru]),
         Command('rg', ['rg', '-n', '-i', pat, ru]),
         Command('grep', ['grep', '-E', '-ni', pat, ru], env=GREP_UNICODE),
     ])
@@ -584,8 +654,10 @@ def bench_subtitles_ru_surrounding_words(suite_dir):
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-n', pat, ru]),
         Command('grep', ['grep', '-E', '-n', pat, ru], env=GREP_UNICODE),
+        Command('ugrep', ['ugrep', '-n', pat, ru]),
         Command('ag (ASCII)', ['ag', '-s', pat, ru]),
         Command('grep (ASCII)', ['grep', '-E', '-n', pat, ru], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-n', '-U', pat, ru]),
     ])
 
 
@@ -604,9 +676,11 @@ def bench_subtitles_ru_no_literal(suite_dir):
 
     return Benchmark(pattern=pat, commands=[
         Command('rg', ['rg', '-n', pat, ru]),
+        Command('ugrep', ['ugrep', '-n', pat, ru]),
         Command('rg (ASCII)', ['rg', '-n', '(?-u)' + pat, ru]),
         Command('ag (ASCII)', ['ag', '-s', pat, ru]),
         Command('grep (ASCII)', ['grep', '-E', '-n', pat, ru], env=GREP_ASCII),
+        Command('ugrep (ASCII)', ['ugrep', '-n', '-U', pat, ru])
     ])
 
 
