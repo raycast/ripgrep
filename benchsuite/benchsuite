@@ -23,13 +23,15 @@ import time
 # strategies used to increase the relevance of results returned.
 
 SUBTITLES_DIR = 'subtitles'
-SUBTITLES_EN_NAME = 'OpenSubtitles2016.raw.en'
-SUBTITLES_EN_NAME_SAMPLE = 'OpenSubtitles2016.raw.sample.en'
+SUBTITLES_EN_NAME = 'en.txt'
+SUBTITLES_EN_NAME_SAMPLE = 'en.sample.txt'
 SUBTITLES_EN_NAME_GZ = '%s.gz' % SUBTITLES_EN_NAME
-SUBTITLES_EN_URL = 'http://opus.lingfil.uu.se/OpenSubtitles2016/mono/OpenSubtitles2016.raw.en.gz'  # noqa
-SUBTITLES_RU_NAME = 'OpenSubtitles2016.raw.ru'
+# SUBTITLES_EN_URL = 'http://opus.lingfil.uu.se/OpenSubtitles2016/mono/OpenSubtitles2016.raw.en.gz'  # noqa
+SUBTITLES_EN_URL = 'https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2016/mono/en.txt.gz'  # noqa
+SUBTITLES_RU_NAME = 'ru.txt'
 SUBTITLES_RU_NAME_GZ = '%s.gz' % SUBTITLES_RU_NAME
-SUBTITLES_RU_URL = 'http://opus.lingfil.uu.se/OpenSubtitles2016/mono/OpenSubtitles2016.raw.ru.gz'  # noqa
+# SUBTITLES_RU_URL = 'http://opus.lingfil.uu.se/OpenSubtitles2016/mono/OpenSubtitles2016.raw.ru.gz'  # noqa
+SUBTITLES_RU_URL = 'https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2016/mono/ru.txt.gz'  # noqa
 
 LINUX_DIR = 'linux'
 LINUX_CLONE = 'git://github.com/BurntSushi/linux'
@@ -255,11 +257,11 @@ def bench_linux_unicode_greek_casei(suite_dir):
 
 def bench_linux_unicode_word(suite_dir):
     '''
-    Benchmark Unicode aware \w character class.
+    Benchmark Unicode aware \\w character class.
 
     Only ripgrep and git-grep (with LC_ALL=en_US.UTF-8) actually get
     this right. Everything else uses the standard ASCII interpretation
-    of \w.
+    of \\w.
     '''
     require(suite_dir, 'linux')
     cwd = path.join(suite_dir, LINUX_DIR)
@@ -1088,7 +1090,7 @@ def download_subtitles_en(suite_dir):
         # benchmarks finish in a reasonable time.
         with open(path.join(subtitle_dir, en_path_sample), 'wb+') as f:
             run_cmd(
-                ['head', '-n', '32722372', en_path],
+                ['head', '-n', '55000000', en_path],
                 cwd=subtitle_dir, stdout=f)
 
 
