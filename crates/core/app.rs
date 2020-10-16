@@ -1945,6 +1945,10 @@ Don't respect ignore files (.gitignore, .ignore, etc.). This implies
 This does *not* imply --no-ignore-files, since --ignore-file is specified
 explicitly as a command line argument.
 
+When given only once, the -u flag is identical in behavior to --no-ignore and
+can be considered an alias. However, subsequent -u flags have additional
+effects; see --unrestricted.
+
 This flag can be disabled with the --ignore flag.
 "
     );
@@ -2950,8 +2954,9 @@ fn flag_unrestricted(args: &mut Vec<RGArg>) {
     const LONG: &str = long!(
         "\
 Reduce the level of \"smart\" searching. A single -u won't respect .gitignore
-(etc.) files. Two -u flags will additionally search hidden files and
-directories. Three -u flags will additionally search binary files.
+(etc.) files (--no-ignore). Two -u flags will additionally search hidden files
+and directories (--hidden). Three -u flags will additionally search binary files
+(--binary).
 
 'rg -uuu' is roughly equivalent to 'grep -r'.
 "
