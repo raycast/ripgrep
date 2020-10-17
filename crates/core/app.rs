@@ -2634,6 +2634,15 @@ fn flag_smart_case(args: &mut Vec<RGArg>) {
 Searches case insensitively if the pattern is all lowercase. Search case
 sensitively otherwise.
 
+A pattern is considered all lowercase if both of the following rules hold:
+
+First, the pattern contains at least one literal character. For example, 'a\\w'
+contains a literal ('a') but just '\\w' does not.
+
+Second, of the literals in the pattern, none of them are considered to be
+uppercase according to Unicode. For example, 'foo\\pL' has no uppercase
+literals but 'Foo\\pL' does.
+
 This overrides the -s/--case-sensitive and -i/--ignore-case flags.
 "
     );
