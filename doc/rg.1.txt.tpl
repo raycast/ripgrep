@@ -191,10 +191,12 @@ simple. It is defined by two rules:
        whitespace) are ignored.
 
 ripgrep will look for a single configuration file if and only if the
-*RIPGREP_CONFIG_PATH* environment variable is set and is non-empty.
-ripgrep will parse shell arguments from this file on startup and will
-behave as if the arguments in this file were prepended to any explicit
-arguments given to ripgrep on the command line.
+*RIPGREP_CONFIG_PATH* environment variable is set and is non-empty. ripgrep
+will parse shell arguments from this file on startup and will behave as if
+the arguments in this file were prepended to any explicit arguments given to
+ripgrep on the command line. Note though that the 'rg' command you run must
+still be valid. That is, it must always contain at least one pattern at the
+command line, even if the configuration file uses the '-e/--regexp' flag.
 
 For example, if your ripgreprc file contained a single line:
 
