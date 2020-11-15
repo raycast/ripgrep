@@ -24,10 +24,13 @@ Project home page: https://github.com/BurntSushi/ripgrep
 
 const USAGE: &str = "
     rg [OPTIONS] PATTERN [PATH ...]
-    rg [OPTIONS] [-e PATTERN ...] [-f PATTERNFILE ...] [PATH ...]
+    rg [OPTIONS] -e PATTERN ... [PATH ...]
+    rg [OPTIONS] -f PATTERNFILE ... [PATH ...]
     rg [OPTIONS] --files [PATH ...]
     rg [OPTIONS] --type-list
-    command | rg [OPTIONS] PATTERN";
+    command | rg [OPTIONS] PATTERN
+    rg [OPTIONS] --help
+    rg [OPTIONS] --version";
 
 const TEMPLATE: &str = "\
 {bin} {version}
