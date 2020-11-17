@@ -5,8 +5,7 @@ command line applications. This includes, but is not limited to, parsing hex
 escapes, detecting whether stdin is readable and more. To the extent possible,
 this crate strives for compatibility across Windows, macOS and Linux.
 
-[![Linux build status](https://api.travis-ci.org/BurntSushi/ripgrep.svg)](https://travis-ci.org/BurntSushi/ripgrep)
-[![Windows build status](https://ci.appveyor.com/api/projects/status/github/BurntSushi/ripgrep?svg=true)](https://ci.appveyor.com/project/BurntSushi/ripgrep)
+[![Build status](https://github.com/BurntSushi/ripgrep/workflows/ci/badge.svg)](https://github.com/BurntSushi/ripgrep/actions)
 [![](https://img.shields.io/crates/v/grep-cli.svg)](https://crates.io/crates/grep-cli)
 
 Dual-licensed under MIT or the [UNLICENSE](https://unlicense.org/).

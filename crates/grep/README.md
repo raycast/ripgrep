@@ -2,8 +2,7 @@ grep
 ----
 ripgrep, as a library.
 
-[![Linux build status](https://api.travis-ci.org/BurntSushi/ripgrep.svg)](https://travis-ci.org/BurntSushi/ripgrep)
-[![Windows build status](https://ci.appveyor.com/api/projects/status/github/BurntSushi/ripgrep?svg=true)](https://ci.appveyor.com/project/BurntSushi/ripgrep)
+[![Build status](https://github.com/BurntSushi/ripgrep/workflows/ci/badge.svg)](https://github.com/BurntSushi/ripgrep/actions)
 [![](https://img.shields.io/crates/v/grep.svg)](https://crates.io/crates/grep)
 
 Dual-licensed under MIT or the [UNLICENSE](https://unlicense.org/).
