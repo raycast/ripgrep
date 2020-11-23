@@ -19,6 +19,8 @@ Bug fixes:
 
 * [BUG #1277](https://github.com/BurntSushi/ripgrep/issues/1277):
   Document cygwin path translation behavior in the FAQ.
+* [BUG #1741](https://github.com/BurntSushi/ripgrep/issues/1741):
+  Fix stdin detection when using PowerShell in UNIX environments.
 
 
 12.1.1 (2020-05-29)
