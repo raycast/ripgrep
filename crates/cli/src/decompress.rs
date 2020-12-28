@@ -366,6 +366,30 @@ impl DecompressionReader {
         let file = File::open(path)?;
         Ok(DecompressionReader { rdr: Err(file) })
     }
+
+    /// Closes this reader, freeing any resources used by its underlying child
+    /// process, if one was used. If the child process exits with a nonzero
+    /// exit code, the returned Err value will include its stderr.
+    ///
+    /// `close` is idempotent, meaning it can be safely called multiple times.
+    /// The first call closes the CommandReader and any subsequent calls do
+    /// nothing.
+    ///
+    /// This method should be called after partially reading a file to prevent
+    /// resource leakage. However there is no need to call `close` explicitly
+    /// if your code always calls `read` to EOF, as `read` takes care of
+    /// calling `close` in this case.
+    ///
+    /// `close` is also called in `drop` as a last line of defense against
+    /// resource leakage. Any error from the child process is then printed as a
+    /// warning to stderr. This can be avoided by explictly calling `close`
+    /// before the CommandReader is dropped.
+    pub fn close(&mut self) -> io::Result<()> {
+        match self.rdr {
+            Ok(ref mut rdr) => rdr.close(),
+            Err(_) => Ok(()),
+        }
+    }
 }
 
 impl io::Read for DecompressionReader {
