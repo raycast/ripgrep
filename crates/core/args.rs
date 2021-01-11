@@ -290,7 +290,7 @@ impl Args {
         let mut builder = SearchWorkerBuilder::new();
         builder
             .json_stats(matches.is_present("json"))
-            .preprocessor(matches.preprocessor())
+            .preprocessor(matches.preprocessor())?
             .preprocessor_globs(matches.preprocessor_globs()?)
             .search_zip(matches.is_present("search-zip"))
             .binary_detection_implicit(matches.binary_detection_implicit())

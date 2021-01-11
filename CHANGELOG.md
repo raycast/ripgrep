@@ -15,6 +15,13 @@ Now it looks like this:
 FOO: binary file matches (found "\0" byte around offset XXX)
 ```
 
+Security fixes:
+
+* [CVE-2021-3013](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3013):
+  Fixes a security hole on Windows where running ripgrep with either the
+  `-z/--search-zip` or `--pre` flags can result in running arbitrary
+  executables from the current directory.
+
 Feature enhancements:
 
 * Added or improved file type filtering for Bazel, dvc, FlatBuffers, Futhark,

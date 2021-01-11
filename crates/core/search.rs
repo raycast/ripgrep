@@ -115,9 +115,14 @@ impl SearchWorkerBuilder {
     pub fn preprocessor(
         &mut self,
         cmd: Option<PathBuf>,
-    ) -> &mut SearchWorkerBuilder {
-        self.config.preprocessor = cmd;
-        self
+    ) -> crate::Result<&mut SearchWorkerBuilder> {
+        if let Some(ref prog) = cmd {
+            let bin = cli::resolve_binary(prog)?;
+            self.config.preprocessor = Some(bin);
+        } else {
+            self.config.preprocessor = None;
+        }
+        Ok(self)
     }
 
     /// Set the globs for determining which files should be run through the

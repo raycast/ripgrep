@@ -179,8 +179,8 @@ mod process;
 mod wtr;
 
 pub use decompress::{
-    DecompressionMatcher, DecompressionMatcherBuilder, DecompressionReader,
-    DecompressionReaderBuilder,
+    resolve_binary, DecompressionMatcher, DecompressionMatcherBuilder,
+    DecompressionReader, DecompressionReaderBuilder,
 };
 pub use escape::{escape, escape_os, unescape, unescape_os};
 pub use human::{parse_human_readable_size, ParseSizeError};
