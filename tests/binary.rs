@@ -5,17 +5,17 @@ use crate::util::{Dir, TestCommand};
 // bug report: https://github.com/BurntSushi/ripgrep/issues/306
 
 // Our haystack is the first 500 lines of Gutenberg's copy of "A Study in
-// Scarlet," with a NUL byte at line 237: `abcdef\x00`.
+// Scarlet," with a NUL byte at line 1898: `abcdef\x00`.
 //
 // The position and size of the haystack is, unfortunately, significant. In
 // particular, the NUL byte is specifically inserted at some point *after* the
-// first 8192 bytes, which corresponds to the initial capacity of the buffer
+// first 65,536 bytes, which corresponds to the initial capacity of the buffer
 // that ripgrep uses to read files. (grep for DEFAULT_BUFFER_CAPACITY.) The
 // position of the NUL byte ensures that we can execute some search on the
 // initial buffer contents without ever detecting any binary data. Moreover,
-// when using a memory map for searching, only the first 8192 bytes are
+// when using a memory map for searching, only the first 65,536 bytes are
 // scanned for a NUL byte, so no binary bytes are detected at all when using
-// a memory map (unless our query matches line 237).
+// a memory map (unless our query matches line 1898).
 //
 // One last note: in the tests below, we use --no-mmap heavily because binary
 // detection with memory maps is a bit different. Namely, NUL bytes are only
@@ -40,7 +40,7 @@ rgtest!(after_match1_implicit, |dir: Dir, mut cmd: TestCommand| {
 
     let expected = "\
 hay:1:The Project Gutenberg EBook of A Study In Scarlet, by Arthur Conan Doyle
-hay: WARNING: stopped searching binary file after match (found \"\\0\" byte around offset 9741)
+hay: WARNING: stopped searching binary file after match (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -53,7 +53,7 @@ rgtest!(after_match1_explicit, |dir: Dir, mut cmd: TestCommand| {
 
     let expected = "\
 1:The Project Gutenberg EBook of A Study In Scarlet, by Arthur Conan Doyle
-binary file matches (found \"\\0\" byte around offset 9741)
+binary file matches (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -64,7 +64,7 @@ rgtest!(after_match1_stdin, |_: Dir, mut cmd: TestCommand| {
 
     let expected = "\
 1:The Project Gutenberg EBook of A Study In Scarlet, by Arthur Conan Doyle
-binary file matches (found \"\\0\" byte around offset 9741)
+binary file matches (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.pipe(HAY));
 });
@@ -85,7 +85,7 @@ rgtest!(after_match1_implicit_binary, |dir: Dir, mut cmd: TestCommand| {
 
     let expected = "\
 hay:1:The Project Gutenberg EBook of A Study In Scarlet, by Arthur Conan Doyle
-hay: binary file matches (found \"\\0\" byte around offset 9741)
+hay: binary file matches (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -200,7 +200,7 @@ rgtest!(after_match2_implicit, |dir: Dir, mut cmd: TestCommand| {
 
     let expected = "\
 hay:1:The Project Gutenberg EBook of A Study In Scarlet, by Arthur Conan Doyle
-hay: WARNING: stopped searching binary file after match (found \"\\0\" byte around offset 9741)
+hay: WARNING: stopped searching binary file after match (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -220,7 +220,7 @@ rgtest!(after_match2_implicit_text, |dir: Dir, mut cmd: TestCommand| {
 
     let expected = "\
 hay:1:The Project Gutenberg EBook of A Study In Scarlet, by Arthur Conan Doyle
-hay:236:\"And yet you say he is not a medical student?\"
+hay:1867:\"And yet you say he is not a medical student?\"
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -240,7 +240,7 @@ rgtest!(before_match1_explicit, |dir: Dir, mut cmd: TestCommand| {
     cmd.args(&["--no-mmap", "-n", "Heaven", "hay"]);
 
     let expected = "\
-binary file matches (found \"\\0\" byte around offset 9741)
+binary file matches (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -253,7 +253,7 @@ rgtest!(before_match1_implicit_binary, |dir: Dir, mut cmd: TestCommand| {
     cmd.args(&["--no-mmap", "-n", "--binary", "Heaven", "-g", "hay"]);
 
     let expected = "\
-hay: binary file matches (found \"\\0\" byte around offset 9741)
+hay: binary file matches (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -265,7 +265,7 @@ rgtest!(before_match1_implicit_text, |dir: Dir, mut cmd: TestCommand| {
     cmd.args(&["--no-mmap", "-n", "--text", "Heaven", "-g", "hay"]);
 
     let expected = "\
-hay:238:\"No. Heaven knows what the objects of his studies are. But here we
+hay:1871:\"No. Heaven knows what the objects of his studies are. But here we
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -288,7 +288,7 @@ rgtest!(before_match2_explicit, |dir: Dir, mut cmd: TestCommand| {
     cmd.args(&["--no-mmap", "-n", "a medical student", "hay"]);
 
     let expected = "\
-binary file matches (found \"\\0\" byte around offset 9741)
+binary file matches (found \"\\0\" byte around offset 77041)
 ";
     eqnice!(expected, cmd.stdout());
 });
@@ -300,7 +300,7 @@ rgtest!(before_match2_implicit_text, |dir: Dir, mut cmd: TestCommand| {
     cmd.args(&["--no-mmap", "-n", "--text", "a medical student", "-g", "hay"]);
 
     let expected = "\
-hay:236:\"And yet you say he is not a medical student?\"
+hay:1867:\"And yet you say he is not a medical student?\"
 ";
     eqnice!(expected, cmd.stdout());
 });

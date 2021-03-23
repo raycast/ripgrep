@@ -633,7 +633,7 @@ d
         haystack.push_str("a\n");
 
         let byte_count = haystack.len();
-        let exp = format!("0:a\n131186:a\n\nbyte count:{}\n", byte_count);
+        let exp = format!("0:a\n1048690:a\n\nbyte count:{}\n", byte_count);
 
         SearcherTester::new(&haystack, "a")
             .line_number(false)
@@ -721,14 +721,14 @@ d
         // Namely, it will *always* detect binary data in the current buffer
         // before searching it. Thus, the total number of bytes searched is
         // smaller than below.
-        let exp = "0:a\n\nbyte count:32770\nbinary offset:32773\n";
+        let exp = "0:a\n\nbyte count:262146\nbinary offset:262149\n";
         // In contrast, the slice readers (for multi line as well) will only
         // look for binary data in the initial chunk of bytes. After that
         // point, it only looks for binary data in matches. Note though that
         // the binary offset remains the same. (See the binary4 test for a case
         // where the offset is explicitly different.)
         let exp_slice =
-            "0:a\n32770:a\n\nbyte count:32773\nbinary offset:32773\n";
+            "0:a\n262146:a\n\nbyte count:262149\nbinary offset:262149\n";
 
         SearcherTester::new(&haystack, "a")
             .binary_detection(BinaryDetection::quit(0))
@@ -755,12 +755,12 @@ d
         haystack.push_str("a\x00a\n");
         haystack.push_str("a\n");
 
-        let exp = "0:a\n\nbyte count:32770\nbinary offset:32773\n";
+        let exp = "0:a\n\nbyte count:262146\nbinary offset:262149\n";
         // The binary offset for the Slice readers corresponds to the binary
         // data in `a\x00a\n` since the first line with binary data
         // (`b\x00b\n`) isn't part of a match, and is therefore undetected.
         let exp_slice =
-            "0:a\n32770:a\n\nbyte count:32777\nbinary offset:32777\n";
+            "0:a\n262146:a\n\nbyte count:262153\nbinary offset:262153\n";
 
         SearcherTester::new(&haystack, "a")
             .binary_detection(BinaryDetection::quit(0))
