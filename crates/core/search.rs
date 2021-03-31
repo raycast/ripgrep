@@ -325,9 +325,10 @@ impl<W: WriteColor> SearchWorker<W> {
         } else {
             self.config.binary_implicit.clone()
         };
-        self.searcher.set_binary_detection(bin);
-
         let path = subject.path();
+        log::trace!("{}: binary detection: {:?}", path.display(), bin);
+
+        self.searcher.set_binary_detection(bin);
         if subject.is_stdin() {
             self.search_reader(path, io::stdin().lock())
         } else if self.should_preprocess(path) {
