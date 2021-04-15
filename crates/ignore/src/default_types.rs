@@ -4,7 +4,7 @@
 /// types to each invocation of ripgrep with the '--type-add' flag.
 ///
 /// If you would like to add or improve this list, please file a PR:
-/// https://github.com/BurntSushi/ripgrep
+/// <https://github.com/BurntSushi/ripgrep>.
 ///
 /// Please try to keep this list sorted lexicographically and wrapped to 79
 /// columns (inclusive).

@@ -19,7 +19,7 @@ use word::WordMatcher;
 /// types of optimizations.
 ///
 /// The syntax supported is documented as part of the regex crate:
-/// https://docs.rs/regex/*/regex/#syntax
+/// <https://docs.rs/regex/#syntax>.
 #[derive(Clone, Debug)]
 pub struct RegexMatcherBuilder {
     config: Config,
@@ -41,7 +41,7 @@ impl RegexMatcherBuilder {
     /// pattern.
     ///
     /// The syntax supported is documented as part of the regex crate:
-    /// https://docs.rs/regex/*/regex/#syntax
+    /// <https://docs.rs/regex/#syntax>.
     pub fn build(&self, pattern: &str) -> Result<RegexMatcher, Error> {
         let chir = self.config.hir(pattern)?;
         let fast_line_regex = chir.fast_line_regex()?;
