@@ -864,3 +864,21 @@ use B;
     ]);
     eqnice!("2\n", cmd.stdout());
 });
+
+rgtest!(r1866, |dir: Dir, mut cmd: TestCommand| {
+    dir.create("test", "foobar\nfoobar\nfoo quux");
+    cmd.args(&[
+        "--multiline",
+        "--vimgrep",
+        r"foobar\nfoobar\nfoo|quux",
+        "test",
+    ]);
+
+    let expected = "\
+test:1:1:foobar
+test:2:1:foobar
+test:3:1:foo quux
+test:3:5:foo quux
+";
+    eqnice!(expected, cmd.stdout());
+});

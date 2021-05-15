@@ -77,7 +77,7 @@ rgtest!(vimgrep, |dir: Dir, mut cmd: TestCommand| {
     let expected = "\
 sherlock:1:16:For the Doctor Watsons of this world, as opposed to the Sherlock
 sherlock:1:57:For the Doctor Watsons of this world, as opposed to the Sherlock
-sherlock:2:57:Holmeses, success in the province of detective work must always
+sherlock:2:1:Holmeses, success in the province of detective work must always
 sherlock:3:49:be, to a very large extent, the result of luck. Sherlock Holmes
 sherlock:5:12:but Doctor Watson has to have it taken out for him and dusted,
 ";

@@ -222,7 +222,9 @@ impl StandardBuilder {
     /// When multi-line mode is enabled, each match and its accompanying lines
     /// are printed. As with single line matches, if a line contains multiple
     /// matches (even if only partially), then that line is printed once for
-    /// each match it participates in.
+    /// each match it participates in. In multi-line mode, column numbers only
+    /// indicate the start of a match. If a line only continues a match, then
+    /// the column number printed is always `1`.
     pub fn per_match(&mut self, yes: bool) -> &mut StandardBuilder {
         self.config.per_match = yes;
         self
@@ -1090,7 +1092,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                 self.write_prelude(
                     self.sunk.absolute_byte_offset() + line.start() as u64,
                     self.sunk.line_number().map(|n| n + count),
-                    Some(m.start() as u64 + 1),
+                    Some(m.start().saturating_sub(line.start()) as u64 + 1),
                 )?;
                 count += 1;
                 if self.exceeds_max_columns(&bytes[line]) {
@@ -2990,9 +2992,9 @@ Holmeses, success in the province of detective work must always
         let got = printer_contents(&mut printer);
         let expected = "\
 1:16:For the Doctor Watsons of this world, as opposed to the Sherlock
-2:16:Holmeses, success in the province of detective work must always
+2:1:Holmeses, success in the province of detective work must always
 5:12:but Doctor Watson has to have it taken out for him and dusted,
-6:12:and exhibited clearly, with a label attached.
+6:1:and exhibited clearly, with a label attached.
 ";
         assert_eq_printed!(expected, got);
     }
@@ -3019,9 +3021,9 @@ Holmeses, success in the province of detective work must always
         let got = printer_contents(&mut printer);
         let expected = "\
 1:16:For the Doctor Watsons of this world, as opposed to the Sherlock
-2:16:Holmeses, success in the province of detective work must always
-2:123:Holmeses, success in the province of detective work must always
-3:123:be, to a very large extent, the result of luck. Sherlock Holmes
+2:1:Holmeses, success in the province of detective work must always
+2:58:Holmeses, success in the province of detective work must always
+3:1:be, to a very large extent, the result of luck. Sherlock Holmes
 ";
         assert_eq_printed!(expected, got);
     }
