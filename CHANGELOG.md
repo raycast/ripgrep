@@ -51,6 +51,8 @@ Bug fixes:
   Fix bug when computing column numbers in `--vimgrep` mode.
 * [BUG #1868](https://github.com/BurntSushi/ripgrep/issues/1868):
   Fix bug where `--passthru` and `-A/-B/-C` did not override each other.
+* [BUG #1869](https://github.com/BurntSushi/ripgrep/pull/1869):
+  Clarify docs for `--files-with-matches` and `--files-without-match`.
 * [BUG #1878](https://github.com/BurntSushi/ripgrep/issues/1878):
   Fix bug where `\A` could produce unanchored matches in multiline search.
 * [BUG 94e4b8e3](https://github.com/BurntSushi/ripgrep/commit/94e4b8e3):

@@ -1270,10 +1270,10 @@ This is useful to determine whether a particular file is being searched or not.
 }
 
 fn flag_files_with_matches(args: &mut Vec<RGArg>) {
-    const SHORT: &str = "Only print the paths with at least one match.";
+    const SHORT: &str = "Print the paths with at least one match.";
     const LONG: &str = long!(
         "\
-Only print the paths with at least one match.
+Print the paths with at least one match and suppress match contents.
 
 This overrides --files-without-match.
 "
@@ -1287,11 +1287,11 @@ This overrides --files-without-match.
 }
 
 fn flag_files_without_match(args: &mut Vec<RGArg>) {
-    const SHORT: &str = "Only print the paths that contain zero matches.";
+    const SHORT: &str = "Print the paths that contain zero matches.";
     const LONG: &str = long!(
         "\
-Only print the paths that contain zero matches. This inverts/negates the
---files-with-matches flag.
+Print the paths that contain zero matches and suppress match contents. This
+inverts/negates the --files-with-matches flag.
 
 This overrides --files-with-matches.
 "
