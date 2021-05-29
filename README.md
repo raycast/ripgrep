@@ -425,6 +425,14 @@ $ cargo test --all
 from the repository root.
 
 
+### Vulnerability reporting
+
+For reporting a security vulnerability, please
+[contact Andrew Gallant](https://blog.burntsushi.net/about/),
+which has my email address and PGP public key if you wish to send an encrypted
+message.
+
+
 ### Translations
 
 The following is a list of known translations of ripgrep's documentation. These

@@ -21,6 +21,9 @@ Security fixes:
   Fixes a security hole on Windows where running ripgrep with either the
   `-z/--search-zip` or `--pre` flags can result in running arbitrary
   executables from the current directory.
+* [VULN #1773](https://github.com/BurntSushi/ripgrep/issues/1773):
+  This is the public facing issue tracking CVE-2021-3013. ripgrep's README
+  now contains a section describing how to report a vulnerability.
 
 Feature enhancements:
 
