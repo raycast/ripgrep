@@ -15,16 +15,34 @@ Now it looks like this:
 FOO: binary file matches (found "\0" byte around offset XXX)
 ```
 
+Feature enhancements:
+
+* Added or improved file type filtering for Bazel, dvc, FlatBuffers, Futhark,
+  minified files, Mint, pofiles (from GNU gettext) Racket, VCL, Yang
+* [PR #1856](https://github.com/BurntSushi/ripgrep/pull/1856):
+  The README now links to a
+  [Spanish translation](https://github.com/UltiRequiem/traducciones/tree/master/ripgrep).
+
 Bug fixes:
 
 * [BUG #1277](https://github.com/BurntSushi/ripgrep/issues/1277):
   Document cygwin path translation behavior in the FAQ.
+* [BUG #1703](https://github.com/BurntSushi/ripgrep/issues/1703):
+  Clarify the function of `-u/--unrestricted`.
+* [BUG #1708](https://github.com/BurntSushi/ripgrep/issues/1708):
+  Clarify how `-S/--smart-case` works.
+* [BUG #1730](https://github.com/BurntSushi/ripgrep/issues/1730):
+  Clarify that CLI invocation must always be valid, regardless of config file.
 * [BUG #1741](https://github.com/BurntSushi/ripgrep/issues/1741):
   Fix stdin detection when using PowerShell in UNIX environments.
+* [BUG #1847](https://github.com/BurntSushi/ripgrep/issues/1847):
+  Clarify how the `--hidden` flag works.
 * [BUG #1866](https://github.com/BurntSushi/ripgrep/issues/1866#issuecomment-841635553):
   Fix bug when computing column numbers in `--vimgrep` mode.
 * [BUG #1878](https://github.com/BurntSushi/ripgrep/issues/1878):
   Fix bug where `\A` could produce unanchored matches in multiline search.
+* [BUG 94e4b8e3](https://github.com/BurntSushi/ripgrep/commit/94e4b8e3):
+  Fix column numbers with `--vimgrep` is used with `-U/--multiline`.
 
 
 12.1.1 (2020-05-29)
