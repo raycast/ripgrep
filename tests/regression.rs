@@ -883,6 +883,31 @@ test:3:5:foo quux
     eqnice!(expected, cmd.stdout());
 });
 
+// See: https://github.com/BurntSushi/ripgrep/issues/1868
+rgtest!(r1868_context_passthru_override, |dir: Dir, _: TestCommand| {
+    dir.create("test", "foo\nbar\nbaz\nquux\n");
+
+    let args = &["-C1", "bar", "test"];
+    eqnice!("foo\nbar\nbaz\n", dir.command().args(args).stdout());
+    let args = &["--passthru", "bar", "test"];
+    eqnice!("foo\nbar\nbaz\nquux\n", dir.command().args(args).stdout());
+
+    let args = &["--passthru", "-C1", "bar", "test"];
+    eqnice!("foo\nbar\nbaz\n", dir.command().args(args).stdout());
+    let args = &["-C1", "--passthru", "bar", "test"];
+    eqnice!("foo\nbar\nbaz\nquux\n", dir.command().args(args).stdout());
+
+    let args = &["--passthru", "-B1", "bar", "test"];
+    eqnice!("foo\nbar\n", dir.command().args(args).stdout());
+    let args = &["-B1", "--passthru", "bar", "test"];
+    eqnice!("foo\nbar\nbaz\nquux\n", dir.command().args(args).stdout());
+
+    let args = &["--passthru", "-A1", "bar", "test"];
+    eqnice!("bar\nbaz\n", dir.command().args(args).stdout());
+    let args = &["-A1", "--passthru", "bar", "test"];
+    eqnice!("foo\nbar\nbaz\nquux\n", dir.command().args(args).stdout());
+});
+
 rgtest!(r1878, |dir: Dir, _: TestCommand| {
     dir.create("test", "a\nbaz\nabc\n");
 

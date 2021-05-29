@@ -696,7 +696,7 @@ fn flag_after_context(args: &mut Vec<RGArg>) {
         "\
 Show NUM lines after each match.
 
-This overrides the --context flag.
+This overrides the --context and --passthru flags.
 "
     );
     let arg = RGArg::flag("after-context", "NUM")
@@ -704,6 +704,7 @@ This overrides the --context flag.
         .help(SHORT)
         .long_help(LONG)
         .number()
+        .overrides("passthru")
         .overrides("context");
     args.push(arg);
 }
@@ -765,7 +766,7 @@ fn flag_before_context(args: &mut Vec<RGArg>) {
         "\
 Show NUM lines before each match.
 
-This overrides the --context flag.
+This overrides the --context and --passthru flags.
 "
     );
     let arg = RGArg::flag("before-context", "NUM")
@@ -773,6 +774,7 @@ This overrides the --context flag.
         .help(SHORT)
         .long_help(LONG)
         .number()
+        .overrides("passthru")
         .overrides("context");
     args.push(arg);
 }
@@ -1005,7 +1007,8 @@ fn flag_context(args: &mut Vec<RGArg>) {
 Show NUM lines before and after each match. This is equivalent to providing
 both the -B/--before-context and -A/--after-context flags with the same value.
 
-This overrides both the -B/--before-context and -A/--after-context flags.
+This overrides both the -B/--before-context and -A/--after-context flags,
+in addition to the --passthru flag.
 "
     );
     let arg = RGArg::flag("context", "NUM")
@@ -1013,6 +1016,7 @@ This overrides both the -B/--before-context and -A/--after-context flags.
         .help(SHORT)
         .long_help(LONG)
         .number()
+        .overrides("passthru")
         .overrides("before-context")
         .overrides("after-context");
     args.push(arg);
@@ -2348,12 +2352,17 @@ the empty string. For example, if you are searching using 'rg foo' then using
 'rg \"^|foo\"' instead will emit every line in every file searched, but only
 occurrences of 'foo' will be highlighted. This flag enables the same behavior
 without needing to modify the pattern.
+
+This overrides the --context, --after-context and --before context flags.
 "
     );
     let arg = RGArg::switch("passthru")
         .help(SHORT)
         .long_help(LONG)
-        .alias("passthrough");
+        .alias("passthrough")
+        .overrides("after-context")
+        .overrides("before-context")
+        .overrides("context");
     args.push(arg);
 }
 

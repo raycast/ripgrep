@@ -49,6 +49,8 @@ Bug fixes:
   Clarify how the `--hidden` flag works.
 * [BUG #1866](https://github.com/BurntSushi/ripgrep/issues/1866#issuecomment-841635553):
   Fix bug when computing column numbers in `--vimgrep` mode.
+* [BUG #1868](https://github.com/BurntSushi/ripgrep/issues/1868):
+  Fix bug where `--passthru` and `-A/-B/-C` did not override each other.
 * [BUG #1878](https://github.com/BurntSushi/ripgrep/issues/1878):
   Fix bug where `\A` could produce unanchored matches in multiline search.
 * [BUG 94e4b8e3](https://github.com/BurntSushi/ripgrep/commit/94e4b8e3):
