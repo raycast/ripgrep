@@ -23,6 +23,8 @@ Bug fixes:
   Fix stdin detection when using PowerShell in UNIX environments.
 * [BUG #1866](https://github.com/BurntSushi/ripgrep/issues/1866#issuecomment-841635553):
   Fix bug when computing column numbers in `--vimgrep` mode.
+* [BUG #1878](https://github.com/BurntSushi/ripgrep/issues/1878):
+  Fix bug where `\A` could produce unanchored matches in multiline search.
 
 
 12.1.1 (2020-05-29)

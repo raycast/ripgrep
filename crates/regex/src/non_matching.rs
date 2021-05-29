@@ -13,7 +13,10 @@ pub fn non_matching_bytes(expr: &Hir) -> ByteSet {
 /// the given expression.
 fn remove_matching_bytes(expr: &Hir, set: &mut ByteSet) {
     match *expr.kind() {
-        HirKind::Empty | HirKind::Anchor(_) | HirKind::WordBoundary(_) => {}
+        HirKind::Empty | HirKind::WordBoundary(_) => {}
+        HirKind::Anchor(_) => {
+            set.remove(b'\n');
+        }
         HirKind::Literal(hir::Literal::Unicode(c)) => {
             for &b in c.encode_utf8(&mut [0; 4]).as_bytes() {
                 set.remove(b);

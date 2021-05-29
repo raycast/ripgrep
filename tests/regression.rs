@@ -882,3 +882,26 @@ test:3:5:foo quux
 ";
     eqnice!(expected, cmd.stdout());
 });
+
+rgtest!(r1878, |dir: Dir, _: TestCommand| {
+    dir.create("test", "a\nbaz\nabc\n");
+
+    // Since ripgrep enables (?m) by default, '^' will match at the beginning
+    // of a line, even when -U/--multiline is used.
+    let args = &["-U", "--no-mmap", r"^baz", "test"];
+    eqnice!("baz\n", dir.command().args(args).stdout());
+    let args = &["-U", "--mmap", r"^baz", "test"];
+    eqnice!("baz\n", dir.command().args(args).stdout());
+
+    // But when (?-m) is disabled, or when \A is used, then there should be no
+    // matches that aren't anchored to the beginning of the file.
+    let args = &["-U", "--no-mmap", r"(?-m)^baz", "test"];
+    dir.command().args(args).assert_err();
+    let args = &["-U", "--mmap", r"(?-m)^baz", "test"];
+    dir.command().args(args).assert_err();
+
+    let args = &["-U", "--no-mmap", r"\Abaz", "test"];
+    dir.command().args(args).assert_err();
+    let args = &["-U", "--mmap", r"\Abaz", "test"];
+    dir.command().args(args).assert_err();
+});
