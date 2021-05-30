@@ -29,9 +29,9 @@ Release Checklist
 * Copy the relevant section of the CHANGELOG to the tagged release notes.
   Include this blurb describing what ripgrep is:
   > In case you haven't heard of it before, ripgrep is a line-oriented search
-  > tool that recursively searches your current directory for a regex pattern.
-  > By default, ripgrep will respect your gitignore rules and automatically
-  > skip hidden files/directories and binary files.
+  > tool that recursively searches the current directory for a regex pattern.
+  > By default, ripgrep will respect gitignore rules and automatically skip
+  > hidden files/directories and binary files.
 * Run `ci/build-deb` locally and manually upload the deb package to the
   release.
 * Run `cargo publish`.

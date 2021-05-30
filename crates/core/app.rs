@@ -13,8 +13,8 @@ use clap::{self, crate_authors, crate_version, App, AppSettings};
 use lazy_static::lazy_static;
 
 const ABOUT: &str = "
-ripgrep (rg) recursively searches your current directory for a regex pattern.
-By default, ripgrep will respect your .gitignore and automatically skip hidden
+ripgrep (rg) recursively searches the current directory for a regex pattern.
+By default, ripgrep will respect gitignore rules and automatically skip hidden
 files/directories and binary files.
 
 Use -h for short descriptions and --help for more details.
