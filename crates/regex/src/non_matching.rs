@@ -128,4 +128,12 @@ mod tests {
         assert_eq!(sparse(&extract(r"\xFF")), sparse_except(&[0xC3, 0xBF]));
         assert_eq!(sparse(&extract(r"(?-u)\xFF")), sparse_except(&[0xFF]));
     }
+
+    #[test]
+    fn anchor() {
+        assert_eq!(sparse(&extract(r"^")), sparse_except(&[b'\n']));
+        assert_eq!(sparse(&extract(r"$")), sparse_except(&[b'\n']));
+        assert_eq!(sparse(&extract(r"\A")), sparse_except(&[b'\n']));
+        assert_eq!(sparse(&extract(r"\z")), sparse_except(&[b'\n']));
+    }
 }
