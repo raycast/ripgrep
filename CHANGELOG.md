@@ -8,7 +8,7 @@ some performance improvements and some minor breaking changes.
 A new short flag, `-.`, has been added. It is an alias for the `--hidden` flag,
 which instructs ripgrep to search hidden files and directories.
 
-ripgrep is nowing using a new
+ripgrep is now using a new
 [vectorized implementation of `memmem`](https://github.com/BurntSushi/memchr/pull/82),
 which accelerates many common searches. If you notice any performance
 regressions (or major improvements), I'd love to hear about them through an
@@ -71,8 +71,8 @@ Performance improvements:
 Feature enhancements:
 
 * Added or improved file type filtering for ASP, Bazel, dvc, FlatBuffers,
-  Futhark, minified files, Mint, pofiles (from GNU gettext) Racket, Red, VCL,
-  Yang.
+  Futhark, minified files, Mint, pofiles (from GNU gettext) Racket, Red, Ruby,
+  VCL, Yang.
 * [FEATURE #1404](https://github.com/BurntSushi/ripgrep/pull/1404):
   ripgrep now prints a warning if nothing is searched.
 * [FEATURE #1613](https://github.com/BurntSushi/ripgrep/pull/1613):
