@@ -8,10 +8,15 @@ some performance improvements and some minor breaking changes.
 A new short flag, `-.`, has been added. It is an alias for the `--hidden` flag,
 which instructs ripgrep to search hidden files and directories.
 
-ripgrep is also used a new
+ripgrep is nowing using a new
 [vectorized implementation of `memmem`](https://github.com/BurntSushi/memchr/pull/82),
-which is used to accelerate many common searches. If you notice any performance
-regressions (or major improvements), I'd love to hear about them.
+which accelerates many common searches. If you notice any performance
+regressions (or major improvements), I'd love to hear about them through an
+issue report!
+
+Also, for Windows users targeting MSVC, Cargo will now build fully static
+executables of ripgrep. The release binaries for ripgrep 13 have been compiled
+using this configuration.
 
 **BREAKING CHANGES**:
 
@@ -43,6 +48,8 @@ This appears to match how `pcre2grep` implements `--count`. Previously, ripgrep
 would produce outright incorrect counts. Another alternative would be to simply
 count the number of lines---even if it's more than the number of matches---but
 that seems highly unintuitive.
+
+**FULL LIST OF FIXES AND IMPROVEMENTS:**
 
 Security fixes:
 
