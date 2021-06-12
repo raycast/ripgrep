@@ -3,7 +3,8 @@ Release Checklist
 * Run `cargo update` and review dependency updates. Commit updated
   `Cargo.lock`.
 * Run `cargo outdated` and review semver incompatible updates. Unless there is
-  a strong motivation otherwise, review and update every dependency.
+  a strong motivation otherwise, review and update every dependency. Also
+  run `--aggressive`, but don't update to crates that are still in beta.
 * Review changes for every crate in `crates` since the last ripgrep release.
   If the set of changes is non-empty, issue a new release for that crate. Check
   crates in the following order. After updating a crate, ensure minimal
