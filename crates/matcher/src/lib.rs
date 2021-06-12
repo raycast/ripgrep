@@ -116,7 +116,7 @@ impl Match {
     /// This method panics if `start > self.end`.
     #[inline]
     pub fn with_start(&self, start: usize) -> Match {
-        assert!(start <= self.end);
+        assert!(start <= self.end, "{} is not <= {}", start, self.end);
         Match { start, ..*self }
     }
 
@@ -128,7 +128,7 @@ impl Match {
     /// This method panics if `self.start > end`.
     #[inline]
     pub fn with_end(&self, end: usize) -> Match {
-        assert!(self.start <= end);
+        assert!(self.start <= end, "{} is not <= {}", self.start, end);
         Match { end, ..*self }
     }
 

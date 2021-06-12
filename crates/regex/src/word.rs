@@ -111,8 +111,15 @@ impl WordMatcher {
         }
         let (_, slen) = bstr::decode_utf8(&haystack[cand]);
         let (_, elen) = bstr::decode_last_utf8(&haystack[cand]);
-        cand =
-            cand.with_start(cand.start() + slen).with_end(cand.end() - elen);
+        let new_start = cand.start() + slen;
+        let new_end = cand.end() - elen;
+        // This occurs the original regex can match the empty string. In this
+        // case, just bail instead of trying to get it right here since it's
+        // likely a pathological case.
+        if new_start > new_end {
+            return Err(());
+        }
+        cand = cand.with_start(new_start).with_end(new_end);
         if self.original.is_match(&haystack[cand]) {
             Ok(Some(cand))
         } else {
