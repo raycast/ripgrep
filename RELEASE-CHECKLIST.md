@@ -1,5 +1,6 @@
 Release Checklist
 -----------------
+* Ensure local `master` is up to date with respect to `origin/master`.
 * Run `cargo update` and review dependency updates. Commit updated
   `Cargo.lock`.
 * Run `cargo outdated` and review semver incompatible updates. Unless there is
