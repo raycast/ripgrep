@@ -14,5 +14,5 @@ license = "Unlicense/MIT"
 edition = "2018"
 
 [dependencies]
-grep-matcher = { version = "0.1.2", path = "../matcher" }
+grep-matcher = { version = "0.1.5", path = "../matcher" }
 pcre2 = "0.2.0"
