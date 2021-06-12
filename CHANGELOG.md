@@ -1,6 +1,11 @@
-TBD
-===
+13.0.1
+======
 Unreleased changes. Release notes have not yet been written.
+
+Bug fixes:
+
+* [BUG #1891](https://github.com/BurntSushi/ripgrep/issues/1891):
+  Fix bug when using `-w` with a regex that can match the empty string.
 
 
 13.0.0 (2021-06-12)
