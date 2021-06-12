@@ -26,8 +26,11 @@ Release Checklist
   `cargo update -p ripgrep` so that the `Cargo.lock` is updated. Commit the
   changes and create a new signed tag. Alternatively, use
   `cargo-up --no-push --no-release Cargo.toml {VERSION}` to automate this.
-* Push changes to GitHub, including the tag. (But do not publish new version of
-  ripgrep to crates.io yet.)
+* Push changes to GitHub, NOT including the tag. (But do not publish new
+  version of ripgrep to crates.io yet.)
+* Once CI for `master` finishes successfully, push the version tag. (Trying to
+  do this in one step seems to result in GitHub Actions not seeing the tag
+  push and thus not running the release workflow.)
 * Wait for CI to finish creating the release. If the release build fails, then
   delete the tag from GitHub, make fixes, re-tag, delete the release and push.
 * Copy the relevant section of the CHANGELOG to the tagged release notes.
