@@ -6,6 +6,8 @@ Bug fixes:
 
 * [BUG #1891](https://github.com/BurntSushi/ripgrep/issues/1891):
   Fix bug when using `-w` with a regex that can match the empty string.
+* [BUG #1911](https://github.com/BurntSushi/ripgrep/issues/1911):
+  Disable mmap searching in all non-64-bit environments.
 
 
 13.0.0 (2021-06-12)
