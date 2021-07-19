@@ -1242,7 +1242,7 @@ fn flag_field_context_separator(args: &mut Vec<RGArg>) {
 Set the field context separator, which is used to delimit file paths, line
 numbers, columns and the context itself, when printing contextual lines. The
 separator may be any number of bytes, including zero. Escape sequences like
-\\x7F or \\t may be used. The default value is -.
+\\x7F or \\t may be used. The '-' character is the default value.
 "
     );
     let arg = RGArg::flag("field-context-separator", "SEPARATOR")
@@ -1257,8 +1257,8 @@ fn flag_field_match_separator(args: &mut Vec<RGArg>) {
         "\
 Set the field match separator, which is used to delimit file paths, line
 numbers, columns and the match itself. The separator may be any number of
-bytes, including zero. Escape sequences like \\x7F or \\t may be used. The
-default value is -.
+bytes, including zero. Escape sequences like \\x7F or \\t may be used. The ':'
+character is the default value.
 "
     );
     let arg = RGArg::flag("field-match-separator", "SEPARATOR")
