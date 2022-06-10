@@ -16,7 +16,7 @@ edition = "2018"
 [dependencies]
 atty = "0.2.11"
 bstr = "0.2.0"
-globset = { version = "0.4.7", path = "../globset" }
+globset = { version = "0.4.9", path = "../globset" }
 lazy_static = "1.1.0"
 log = "0.4.5"
 regex = "1.1"

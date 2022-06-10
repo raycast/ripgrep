@@ -20,7 +20,7 @@ bench = false
 
 [dependencies]
 crossbeam-utils = "0.8.0"
-globset = { version = "0.4.7", path = "../globset" }
+globset = { version = "0.4.9", path = "../globset" }
 lazy_static = "1.1"
 log = "0.4.5"
 memchr = "2.1"
