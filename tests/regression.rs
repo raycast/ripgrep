@@ -1118,3 +1118,11 @@ pipc () {  # [-h] [-U|-u <pkgspec>[,<pkgspec>...]] [<reqs-in>...] [-- <pip-compi
     let expected = " [-h] [-U|-u <pkgspec>[,<pkgspec>...]] [<reqs-in>...] [-- <pip-compile-arg>...]\n";
     eqnice!(expected, cmd.stdout());
 });
+
+// See: https://github.com/BurntSushi/ripgrep/issues/2236
+rgtest!(r2236, |dir: Dir, mut cmd: TestCommand| {
+    dir.create(".ignore", r"foo\/");
+    dir.create_dir("foo");
+    dir.create("foo/bar", "test\n");
+    cmd.args(&["test"]).assert_err();
+});

@@ -474,10 +474,13 @@ impl GitignoreBuilder {
         }
         // If it ends with a slash, then this should only match directories,
         // but the slash should otherwise not be used while globbing.
-        if let Some((i, c)) = line.char_indices().rev().nth(0) {
-            if c == '/' {
-                glob.is_only_dir = true;
-                line = &line[..i];
+        if line.as_bytes().last() == Some(&b'/') {
+            glob.is_only_dir = true;
+            line = &line[..line.len() - 1];
+            // If the slash was escaped, then remove the escape.
+            // See: https://github.com/BurntSushi/ripgrep/issues/2236
+            if line.as_bytes().last() == Some(&b'\\') {
+                line = &line[..line.len() - 1];
             }
         }
         glob.actual = line.to_string();

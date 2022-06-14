@@ -1,5 +1,5 @@
-13.0.1
-======
+TBD
+===
 Unreleased changes. Release notes have not yet been written.
 
 Bug fixes:
@@ -8,6 +8,8 @@ Bug fixes:
   Fix bug when using `-w` with a regex that can match the empty string.
 * [BUG #1911](https://github.com/BurntSushi/ripgrep/issues/1911):
   Disable mmap searching in all non-64-bit environments.
+* [BUG #2236](https://github.com/BurntSushi/ripgrep/issues/2236):
+  Fix gitignore parsing bug where a trailing `\/` resulted in an error.
 
 
 13.0.0 (2021-06-12)
