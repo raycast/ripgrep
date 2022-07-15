@@ -52,8 +52,12 @@ impl RegexMatcherBuilder {
 
         let matcher = RegexMatcherImpl::new(&chir)?;
         log::trace!("final regex: {:?}", matcher.regex());
+        let mut config = self.config.clone();
+        // We override the line terminator in case the configured expr doesn't
+        // support it.
+        config.line_terminator = chir.line_terminator();
         Ok(RegexMatcher {
-            config: self.config.clone(),
+            config,
             matcher,
             fast_line_regex,
             non_matching_bytes,

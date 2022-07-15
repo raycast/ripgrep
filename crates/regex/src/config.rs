@@ -175,6 +175,36 @@ impl ConfiguredHIR {
         self.config.crlf && self.expr.is_line_anchored_end()
     }
 
+    /// Returns the line terminator configured on this expression.
+    ///
+    /// When we have beginning/end anchors (NOT line anchors), the fast line
+    /// searching path isn't quite correct. Or at least, doesn't match the
+    /// slow path. Namely, the slow path strips line terminators while the
+    /// fast path does not. Since '$' (when multi-line mode is disabled)
+    /// doesn't match at line boundaries, the existence of a line terminator
+    /// might cause it to not match when it otherwise would with the line
+    /// terminator stripped.
+    ///
+    /// Since searching with text anchors is exceptionally rare in the
+    /// context of line oriented searching (multi-line mode is basically
+    /// always enabled), we just disable this optimization when there are
+    /// text anchors. We disable it by not returning a line terminator, since
+    /// without a line terminator, the fast search path can't be executed.
+    ///
+    /// See: https://github.com/BurntSushi/ripgrep/issues/2260
+    pub fn line_terminator(&self) -> Option<LineTerminator> {
+        if self.is_any_anchored() {
+            None
+        } else {
+            self.config.line_terminator
+        }
+    }
+
+    /// Returns true if and only if the underlying HIR has any text anchors.
+    fn is_any_anchored(&self) -> bool {
+        self.expr.is_any_anchored_start() || self.expr.is_any_anchored_end()
+    }
+
     /// Builds a regular expression from this HIR expression.
     pub fn regex(&self) -> Result<Regex, Error> {
         self.pattern_to_regex(&self.expr.to_string())

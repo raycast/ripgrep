@@ -1512,4 +1512,31 @@ and exhibited clearly, with a label attached.\
             )
             .unwrap();
     }
+
+    // See: https://github.com/BurntSushi/ripgrep/issues/2260
+    #[test]
+    fn regression_2260() {
+        use grep_regex::RegexMatcherBuilder;
+
+        use crate::SearcherBuilder;
+
+        let matcher = RegexMatcherBuilder::new()
+            .line_terminator(Some(b'\n'))
+            .build(r"^\w+$")
+            .unwrap();
+        let mut searcher = SearcherBuilder::new().line_number(true).build();
+
+        let mut matched = false;
+        searcher
+            .search_slice(
+                &matcher,
+                b"GATC\n",
+                crate::sinks::UTF8(|_, _| {
+                    matched = true;
+                    Ok(true)
+                }),
+            )
+            .unwrap();
+        assert!(matched);
+    }
 }
