@@ -108,7 +108,7 @@ impl<'s, M: Matcher, S: Sink> Core<'s, M, S> {
     }
 
     pub fn match_by_line(&mut self, buf: &[u8]) -> Result<bool, S::Error> {
-        if dbg!(self.is_line_by_line_fast()) {
+        if self.is_line_by_line_fast() {
             self.match_by_line_fast(buf)
         } else {
             self.match_by_line_slow(buf)
