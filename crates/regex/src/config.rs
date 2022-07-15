@@ -191,7 +191,7 @@ impl ConfiguredHIR {
     /// text anchors. We disable it by not returning a line terminator, since
     /// without a line terminator, the fast search path can't be executed.
     ///
-    /// See: https://github.com/BurntSushi/ripgrep/issues/2260
+    /// See: <https://github.com/BurntSushi/ripgrep/issues/2260>
     pub fn line_terminator(&self) -> Option<LineTerminator> {
         if self.is_any_anchored() {
             None
