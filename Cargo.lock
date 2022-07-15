@@ -152,7 +152,7 @@ dependencies = [
 
 [[package]]
 name = "grep"
-version = "0.2.8"
+version = "0.2.9"
 dependencies = [
  "grep-cli",
  "grep-matcher",
