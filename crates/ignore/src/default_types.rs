@@ -146,9 +146,9 @@ pub const DEFAULT_TYPES: &[(&str, &[&str])] = &[
     ]),
     ("mako", &["*.mako", "*.mao"]),
     ("man", &["*.[0-9lnpx]", "*.[0-9][cEFMmpSx]"]),
-    ("markdown", &["*.markdown", "*.md", "*.mdown", "*.mkdn"]),
+    ("markdown", &["*.markdown", "*.md", "*.mdown", "*.mkd", "*.mkdn"]),
     ("matlab", &["*.m"]),
-    ("md", &["*.markdown", "*.md", "*.mdown", "*.mkdn"]),
+    ("md", &["*.markdown", "*.md", "*.mdown", "*.mkd", "*.mkdn"]),
     ("meson", &["meson.build", "meson_options.txt"]),
     ("minified", &["*.min.html", "*.min.css", "*.min.js"]),
     ("mint", &["*.mint"]),
@@ -167,7 +167,12 @@ pub const DEFAULT_TYPES: &[(&str, &[&str])] = &[
     ("pascal", &["*.pas", "*.dpr", "*.lpr", "*.pp", "*.inc"]),
     ("pdf", &["*.pdf"]),
     ("perl", &["*.perl", "*.pl", "*.PL", "*.plh", "*.plx", "*.pm", "*.t"]),
-    ("php", &["*.php", "*.php3", "*.php4", "*.php5", "*.phtml"]),
+    ("php", &[
+        // note that PHP 6 doesn't exist
+        // See: https://wiki.php.net/rfc/php6
+        "*.php", "*.php3", "*.php4", "*.php5", "*.php7", "*.php8",
+        "*.pht", "*.phtml"
+    ]),
     ("po", &["*.po"]),
     ("pod", &["*.pod"]),
     ("postscript", &["*.eps", "*.ps"]),
