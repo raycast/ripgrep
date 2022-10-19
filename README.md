@@ -90,16 +90,16 @@ times are unaffected by the presence or absence of `-n`.
   because it contains most of their features and is generally faster. (See
   [the FAQ](FAQ.md#posix4ever) for more details on whether ripgrep can truly
   replace grep.)
-* Like other tools specialized to code search, ripgrep defaults to recursive
-  directory search and won't search files ignored by your
-  `.gitignore`/`.ignore`/`.rgignore` files. It also ignores hidden and binary
-  files by default. ripgrep also implements full support for `.gitignore`,
-  whereas there are many bugs related to that functionality in other code
-  search tools claiming to provide the same functionality.
-* ripgrep can search specific types of files. For example, `rg -tpy foo`
-  limits your search to Python files and `rg -Tjs foo` excludes JavaScript
-  files from your search. ripgrep can be taught about new file types with
-  custom matching rules.
+* Like other tools specialized to code search, ripgrep defaults to
+  [recursive search](GUIDE.md#recursive-search) and does [automatic
+  filtering](GUIDE.md#automatic-filtering). Namely, ripgrep won't search files
+  ignored by your `.gitignore`/`.ignore`/`.rgignore` files, it won't search
+  hidden files and it won't search binary files. Automatic filtering can be
+  disabled with `rg -uuu`.
+* ripgrep can [search specific types of files](GUIDE.md#manual-filtering-file-types).
+  For example, `rg -tpy foo` limits your search to Python files and `rg -Tjs
+  foo` excludes JavaScript files from your search. ripgrep can be taught about
+  new file types with custom matching rules.
 * ripgrep supports many features found in `grep`, such as showing the context
   of search results, searching multiple patterns, highlighting matches with
   color and full Unicode support. Unlike GNU grep, ripgrep stays fast while
@@ -110,16 +110,20 @@ times are unaffected by the presence or absence of `-n`.
   regex engine. PCRE2 support can be enabled with `-P/--pcre2` (use PCRE2
   always) or `--auto-hybrid-regex` (use PCRE2 only if needed). An alternative
   syntax is provided via the `--engine (default|pcre2|auto-hybrid)` option.
-* ripgrep supports searching files in text encodings other than UTF-8, such
-  as UTF-16, latin-1, GBK, EUC-JP, Shift_JIS and more. (Some support for
-  automatically detecting UTF-16 is provided. Other text encodings must be
-  specifically specified with the `-E/--encoding` flag.)
+* ripgrep has [rudimentary support for replacements](GUIDE.md#replacements),
+  which permit rewriting output based on what was matched.
+* ripgrep supports [searching files in text encodings](GUIDE.md#file-encoding)
+  other than UTF-8, such as UTF-16, latin-1, GBK, EUC-JP, Shift_JIS and more.
+  (Some support for automatically detecting UTF-16 is provided. Other text
+  encodings must be specifically specified with the `-E/--encoding` flag.)
 * ripgrep supports searching files compressed in a common format (brotli,
   bzip2, gzip, lz4, lzma, xz, or zstandard) with the `-z/--search-zip` flag.
 * ripgrep supports
   [arbitrary input preprocessing filters](GUIDE.md#preprocessor)
   which could be PDF text extraction, less supported decompression, decrypting,
   automatic encoding detection and so on.
+* ripgrep can be configured via a
+  [configuration file](GUIDE.md#configuration-file).
 
 In other words, use ripgrep if you like speed, filtering by default, fewer
 bugs and Unicode support.
