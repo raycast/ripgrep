@@ -2,11 +2,11 @@ ripgrep (rg)
 ------------
 ripgrep is a line-oriented search tool that recursively searches the current
 directory for a regex pattern. By default, ripgrep will respect gitignore rules
-and automatically skip hidden files/directories and binary files. ripgrep
-has first class support on Windows, macOS and Linux, with binary downloads
-available for [every release](https://github.com/BurntSushi/ripgrep/releases).
-ripgrep is similar to other popular search tools like The Silver Searcher, ack
-and grep.
+and automatically skip hidden files/directories and binary files. (To disable
+all automatic filtering by default, use `rg -uuu`.) ripgrep has first class
+support on Windows, macOS and Linux, with binary downloads available for [every
+release](https://github.com/BurntSushi/ripgrep/releases). ripgrep is similar to
+other popular search tools like The Silver Searcher, ack and grep.
 
 [![Build status](https://github.com/BurntSushi/ripgrep/workflows/ci/badge.svg)](https://github.com/BurntSushi/ripgrep/actions)
 [![Crates.io](https://img.shields.io/crates/v/ripgrep.svg)](https://crates.io/crates/ripgrep)
