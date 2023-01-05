@@ -19,7 +19,7 @@ default = ["serde1"]
 serde1 = ["base64", "serde", "serde_json"]
 
 [dependencies]
-base64 = { version = "0.13.0", optional = true }
+base64 = { version = "0.20.0", optional = true }
 bstr = "1.1.0"
 grep-matcher = { version = "0.1.5", path = "../matcher" }
 grep-searcher = { version = "0.1.8", path = "../searcher" }
