@@ -224,7 +224,7 @@ dependencies = [
 
 [[package]]
 name = "grep-searcher"
-version = "0.1.10"
+version = "0.1.11"
 dependencies = [
  "bstr",
  "bytecount",
