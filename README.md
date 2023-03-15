@@ -430,6 +430,14 @@ $ cargo test --all
 from the repository root.
 
 
+### Related tools
+
+* [delta](https://github.com/dandavison/delta) is a syntax highlighting
+pager that supports the `rg --json` output format. So all you need to do to
+make it work is `rg --json pattern | delta`. See [delta's manual section on
+grep](https://dandavison.github.io/delta/grep.html) for more details.
+
+
 ### Vulnerability reporting
 
 For reporting a security vulnerability, please
