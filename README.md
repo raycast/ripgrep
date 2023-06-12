@@ -287,8 +287,10 @@ $ curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgre
 $ sudo dpkg -i ripgrep_13.0.0_amd64.deb
 ```
 
-If you run Debian Buster (currently Debian stable) or Debian sid, ripgrep is
-[officially maintained by Debian](https://tracker.debian.org/pkg/rust-ripgrep).
+If you run Debian stable, ripgrep is [officially maintained by
+Debian](https://tracker.debian.org/pkg/rust-ripgrep), although its version may
+be older than the `deb` package available in the previous step.
+
 ```
 $ sudo apt-get install ripgrep
 ```
