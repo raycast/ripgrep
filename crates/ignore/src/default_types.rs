@@ -331,7 +331,9 @@ mod tests {
     #[test]
     fn default_types_are_sorted() {
         let mut names = DEFAULT_TYPES.iter().map(|(aliases, _)| aliases[0]);
-        let Some(mut previous_name) = names.next() else { return; };
+        let Some(mut previous_name) = names.next() else {
+            return;
+        };
         for name in names {
             assert!(
                 name > previous_name,
