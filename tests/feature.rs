@@ -791,6 +791,9 @@ rgtest!(f1466_no_ignore_files, |dir: Dir, mut cmd: TestCommand| {
 rgtest!(f2361_sort_nested_files, |dir: Dir, mut cmd: TestCommand| {
     use std::{thread::sleep, time::Duration};
 
+    if crate::util::is_cross() {
+        return;
+    }
     dir.create("foo", "1");
     sleep(Duration::from_millis(100));
     dir.create_dir("dir");

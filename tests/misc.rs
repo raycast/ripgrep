@@ -1100,12 +1100,18 @@ rgtest!(sort_files, |dir: Dir, mut cmd: TestCommand| {
 });
 
 rgtest!(sort_accessed, |dir: Dir, mut cmd: TestCommand| {
+    if crate::util::is_cross() {
+        return;
+    }
     sort_setup(dir);
     let expected = "a:test\ndir/c:test\nb:test\ndir/d:test\n";
     eqnice!(expected, cmd.args(["--sort", "accessed", "test"]).stdout());
 });
 
 rgtest!(sortr_accessed, |dir: Dir, mut cmd: TestCommand| {
+    if crate::util::is_cross() {
+        return;
+    }
     sort_setup(dir);
     let expected = "dir/d:test\nb:test\ndir/c:test\na:test\n";
     eqnice!(expected, cmd.args(["--sortr", "accessed", "test"]).stdout());
