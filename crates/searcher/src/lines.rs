@@ -3,7 +3,6 @@ A collection of routines for performing operations on lines.
 */
 
 use bstr::ByteSlice;
-use bytecount;
 use grep_matcher::{LineTerminator, Match};
 
 /// An iterator over lines in a particular slice of bytes.
@@ -110,7 +109,7 @@ impl LineStep {
 
 /// Count the number of occurrences of `line_term` in `bytes`.
 pub fn count(bytes: &[u8], line_term: u8) -> u64 {
-    bytecount::count(bytes, line_term) as u64
+    memchr::memchr_iter(line_term, bytes).count() as u64
 }
 
 /// Given a line that possibly ends with a terminator, return that line without
