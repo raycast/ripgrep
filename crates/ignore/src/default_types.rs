@@ -112,7 +112,7 @@ pub const DEFAULT_TYPES: &[(&[&str], &[&str])] = &[
     (&["jinja"], &["*.j2", "*.jinja", "*.jinja2"]),
     (&["jl"], &["*.jl"]),
     (&["js"], &["*.js", "*.jsx", "*.vue", "*.cjs", "*.mjs"]),
-    (&["json"], &["*.json", "composer.lock"]),
+    (&["json"], &["*.json", "composer.lock", "*.sarif"]),
     (&["jsonl"], &["*.jsonl"]),
     (&["julia"], &["*.jl"]),
     (&["jupyter"], &["*.ipynb", "*.jpynb"]),
