@@ -38,6 +38,8 @@ Feature enhancements:
   When `extra-verbose` mode is enabled in zsh, show extra file type info.
 * [FEATURE #2409](https://github.com/BurntSushi/ripgrep/pull/2409):
   Added installation instructions for `winget`.
+* [FEATURE #2425](https://github.com/BurntSushi/ripgrep/pull/2425):
+  Shell completions (and man page) can be created via `rg --generate`.
 * [FEATURE #2524](https://github.com/BurntSushi/ripgrep/issues/2524):
   The `--debug` flag now indicates whether stdin or `./` is being searched.
 * [FEATURE #2643](https://github.com/BurntSushi/ripgrep/issues/2643):
