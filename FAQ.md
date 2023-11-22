@@ -1036,15 +1036,11 @@ tools like ack or The Silver Searcher weren't already doing.
 How can I donate to ripgrep or its maintainers?
 </h3>
 
-As of now, you can't. While I believe the various efforts that are being
-undertaken to help fund FOSS are extremely important, they aren't a good fit
-for me. ripgrep is and I hope will remain a project of love that I develop in
-my free time. As such, involving money---even in the form of donations given
-without expectations---would severely change that dynamic for me personally.
+I welcome [sponsorship](https://github.com/sponsors/BurntSushi/).
 
-Instead, I'd recommend donating to something else that is doing work that you
-find meaningful. If you would like suggestions, then my favorites are:
+Or if you'd prefer, donating to a charitably organization that you like would
+also be most welcome. My favorites are:
 
 * [The Internet Archive](https://archive.org/donate/)
-* [Rails Girls](https://railsgirlssummerofcode.org/campaign/)
+* [Rails Girls](https://railsgirlssummerofcode.org/)
 * [Wikipedia](https://wikimediafoundation.org/support/)
