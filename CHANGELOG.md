@@ -77,6 +77,8 @@ Bug fixes:
   Improve global git config parsing of the `excludesFile` field.
 * [BUG #2480](https://github.com/BurntSushi/ripgrep/issues/2480):
   Fix bug when using inline regex flags with `-e/--regexp`.
+* [BUG #2519](https://github.com/BurntSushi/ripgrep/issues/2519):
+  Fix incorrect default value in documentation for `--field-match-separator`.
 * [BUG #2523](https://github.com/BurntSushi/ripgrep/issues/2523):
   Make executable searching take `.com` into account on Windows.
 * [BUG #2574](https://github.com/BurntSushi/ripgrep/issues/2574):
