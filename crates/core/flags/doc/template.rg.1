@@ -165,7 +165,9 @@ this includes the following:
 Any global rules, e.g., in \fB$HOME/.config/git/ignore\fP.
 .
 .IP \(bu 3n
-Any rules in relevant \fB.gitignore\fP files.
+Any rules in relevant \fB.gitignore\fP files. This includes \fB.gitignore\fP
+files in parent directories that are part of the same \fBgit\fP repository.
+(Unless \fB\-\-no\-require\-git\fP is given.)
 .
 .IP \(bu 3n
 Any local rules, e.g., in \fB.git/info/exclude\fP.
@@ -180,10 +182,12 @@ precisely, or otherwise use \fBgit grep\fP for search.
 Additional ignore rules can be provided outside of a \fBgit\fP context:
 .
 .IP \(bu 3n
-Any rules in \fB.ignore\fP.
+Any rules in \fB.ignore\fP. ripgrep will also respect \fB.ignore\fP files in
+parent directories.
 .
 .IP \(bu 3n
-Any rules in \fB.rgignore\fP.
+Any rules in \fB.rgignore\fP. ripgrep will also respect \fB.rgignore\fP files
+in parent directories.
 .
 .IP \(bu 3n
 Any rules in files specified with the \fB\-\-ignore\-file\fP flag.

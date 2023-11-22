@@ -4734,7 +4734,7 @@ impl Flag for NoRequireGit {
     fn doc_long(&self) -> &'static str {
         r"
 When this flag is given, source control ignore files such as \fB.gitignore\fP
-are respect even if no \fBgit\fP repository is present.
+are respected even if no \fBgit\fP repository is present.
 .sp
 By default, ripgrep will only respect filter rules from source control ignore
 files when ripgrep detects that the search is executed inside a source control

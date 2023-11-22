@@ -75,6 +75,8 @@ Bug fixes:
   Make `-p/--pretty` override flags like `--no-line-number`.
 * [BUG #2392](https://github.com/BurntSushi/ripgrep/issues/2392):
   Improve global git config parsing of the `excludesFile` field.
+* [BUG #2479](https://github.com/BurntSushi/ripgrep/issues/2479):
+  Add documentation about `.ignore`/`.rgignore` files in parent directories.
 * [BUG #2480](https://github.com/BurntSushi/ripgrep/issues/2480):
   Fix bug when using inline regex flags with `-e/--regexp`.
 * [BUG #2519](https://github.com/BurntSushi/ripgrep/issues/2519):
