@@ -92,22 +92,42 @@ The man page is also included in all
 Does ripgrep have support for shell auto-completion?
 </h3>
 
-Yes! Shell completions can be found in the
-[same directory as the man page](#manpage)
-after building ripgrep. Zsh completions are maintained separately and committed
-to the repository in `complete/_rg`.
+Yes! If you installed ripgrep through a package manager on a Unix system, then
+the shell completion files included in the release archive should have been
+installed for you automatically. If not, you can generate completes using
+ripgrep's command line interface.
 
-Shell completions are also included in all
-[ripgrep binary releases](https://github.com/BurntSushi/ripgrep/releases).
+For **bash**:
 
-For **bash**, move `rg.bash` to
-`$XDG_CONFIG_HOME/bash_completion` or `/etc/bash_completion.d/`.
+```
+$ dir="$XDG_CONFIG_HOME/bash_completion"
+$ mkdir -p "$dir"
+$ rg --generate complete-bash > "$dir/rg.bash"
+```
 
-For **fish**, move `rg.fish` to `$HOME/.config/fish/completions/`.
+For **fish**:
 
-For **zsh**, move `_rg` to one of your `$fpath` directories.
+```
+$ dir="$XDG_CONFIG_HOME/fish/completions"
+$ mkdir -p "$dir"
+$ rg --generate complete-fish > "$dir/rg.fish"
+```
 
-For **PowerShell**, add `. _rg.ps1` to your PowerShell
+For **zsh**:
+
+```
+$ dir="$HOME/.zsh-complete"
+$ mkdir -p "$dir"
+$ rg --generate complete-zsh > "$dir/_rg"
+```
+
+For **PowerShell**, create the completions:
+
+```
+$ rg --generate complete-powershell > _rg.ps1
+```
+
+And then add `. _rg.ps1` to your PowerShell
 [profile](https://technet.microsoft.com/en-us/library/bb613488(v=vs.85).aspx)
 (note the leading period). If the `_rg.ps1` file is not on your `PATH`, do
 `. /path/to/_rg.ps1` instead.
