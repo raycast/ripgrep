@@ -40,8 +40,6 @@
   > tool that recursively searches the current directory for a regex pattern.
   > By default, ripgrep will respect gitignore rules and automatically skip
   > hidden files/directories and binary files.
-* Run `git checkout $version && ci/build-and-publish-deb $version` on a Linux
-  system that has `cargo deb` installed.
 * Run `git checkout $version && ci/build-and-publish-m2 $version` on a macOS
   system with Apple silicon.
 * Run `cargo publish`.
