@@ -74,6 +74,13 @@ pcre2 = ["grep/pcre2"]
 [profile.release]
 debug = 1
 
+# This is the main way to strip binaries in the deb package created by
+# 'cargo deb'. For other release binaries, we (currently) call 'strip'
+# explicitly in the release process.
+[profile.deb]
+inherits = "release"
+debug = false
+
 [package.metadata.deb]
 features = ["pcre2"]
 section = "utils"
