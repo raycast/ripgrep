@@ -2,7 +2,7 @@
 Parses command line arguments into a structured and typed representation.
 */
 
-use std::ffi::OsString;
+use std::{borrow::Cow, collections::BTreeSet, ffi::OsString};
 
 use anyhow::Context;
 
@@ -263,7 +263,11 @@ impl Parser {
                     anyhow::bail!("unrecognized flag -{name}")
                 }
                 FlagLookup::UnrecognizedLong(name) => {
-                    anyhow::bail!("unrecognized flag --{name}")
+                    let mut msg = format!("unrecognized flag --{name}");
+                    if let Some(suggest_msg) = suggest(&name) {
+                        msg = format!("{msg}\n\n{suggest_msg}");
+                    }
+                    anyhow::bail!("{msg}")
                 }
             };
             let value = if matches!(mat.kind, FlagInfoKind::Negated) {
@@ -389,4 +393,84 @@ impl FlagMap {
     fn find(&self, name: &[u8]) -> Option<usize> {
         self.map.get(name).copied()
     }
+}
+
+/// Possibly return a message suggesting flags similar in the name to the one
+/// given.
+///
+/// The one given should be a flag given by the user (without the leading
+/// dashes) that was unrecognized. This attempts to find existing flags that
+/// are similar to the one given.
+fn suggest(unrecognized: &str) -> Option<String> {
+    let similars = find_similar_names(unrecognized);
+    if similars.is_empty() {
+        return None;
+    }
+    let list = similars
+        .into_iter()
+        .map(|name| format!("--{name}"))
+        .collect::<Vec<String>>()
+        .join(", ");
+    Some(format!("similar flags that are available: {list}"))
+}
+
+/// Return a sequence of names similar to the unrecognized name given.
+fn find_similar_names(unrecognized: &str) -> Vec<&'static str> {
+    // The jaccard similarity threshold at which we consider two flag names
+    // similar enough that it's worth suggesting it to the end user.
+    //
+    // This value was determined by some ad hoc experimentation. It might need
+    // further tweaking.
+    const THRESHOLD: f64 = 0.4;
+
+    let mut similar = vec![];
+    let bow_given = ngrams(unrecognized);
+    for &flag in FLAGS.iter() {
+        let name = flag.name_long();
+        let bow = ngrams(name);
+        if jaccard_index(&bow_given, &bow) >= THRESHOLD {
+            similar.push(name);
+        }
+        if let Some(name) = flag.name_negated() {
+            let bow = ngrams(name);
+            if jaccard_index(&bow_given, &bow) >= THRESHOLD {
+                similar.push(name);
+            }
+        }
+        for name in flag.aliases() {
+            let bow = ngrams(name);
+            if jaccard_index(&bow_given, &bow) >= THRESHOLD {
+                similar.push(name);
+            }
+        }
+    }
+    similar
+}
+
+/// A "bag of words" is a set of ngrams.
+type BagOfWords<'a> = BTreeSet<Cow<'a, [u8]>>;
+
+/// Returns the jaccard index (a measure of similarity) between sets of ngrams.
+fn jaccard_index(ngrams1: &BagOfWords<'_>, ngrams2: &BagOfWords<'_>) -> f64 {
+    let union = u32::try_from(ngrams1.union(ngrams2).count())
+        .expect("fewer than u32::MAX flags");
+    let intersection = u32::try_from(ngrams1.intersection(ngrams2).count())
+        .expect("fewer than u32::MAX flags");
+    f64::from(intersection) / f64::from(union)
+}
+
+/// Returns all 3-grams in the slice given.
+///
+/// If the slice doesn't contain a 3-gram, then one is artificially created by
+/// padding it out with a character that will never appear in a flag name.
+fn ngrams(flag_name: &str) -> BagOfWords<'_> {
+    // We only allow ASCII flag names, so we can just use bytes.
+    let slice = flag_name.as_bytes();
+    let seq: Vec<Cow<[u8]>> = match slice.len() {
+        0 => vec![Cow::Owned(b"!!!".to_vec())],
+        1 => vec![Cow::Owned(vec![slice[0], b'!', b'!'])],
+        2 => vec![Cow::Owned(vec![slice[0], slice[1], b'!'])],
+        _ => slice.windows(3).map(Cow::Borrowed).collect(),
+    };
+    BTreeSet::from_iter(seq)
 }
