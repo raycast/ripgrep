@@ -27,6 +27,7 @@
   `cargo update -p ripgrep` so that the `Cargo.lock` is updated. Commit the
   changes and create a new signed tag. Alternatively, use
   `cargo-up --no-push --no-release Cargo.toml {VERSION}` to automate this.
+* Run `cargo package` and ensure it succeeds.
 * Push changes to GitHub, NOT including the tag. (But do not publish a new
   version of ripgrep to crates.io yet.)
 * Once CI for `master` finishes successfully, push the version tag. (Trying to
