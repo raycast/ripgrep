@@ -1,6 +1,6 @@
 [package]
 name = "grep-printer"
-version = "0.1.7"  #:version
+version = "0.2.0"  #:version
 authors = ["Andrew Gallant <jamslam@gmail.com>"]
 description = """
 An implementation of the grep crate's Sink trait that provides standard
