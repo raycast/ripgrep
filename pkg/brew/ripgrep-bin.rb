@@ -5,10 +5,10 @@ class RipgrepBin < Formula
 
   if OS.mac?
       url "https://github.com/BurntSushi/ripgrep/releases/download/#{version}/ripgrep-#{version}-x86_64-apple-darwin.tar.gz"
-      sha256 "585c18350cb8d4392461edd6c921e6edd5a97cbfc03b567d7bd440423e118082"
+      sha256 "d60e1df731119e742c4ca4f30655b697250d3b41153a6e80b925d7b9f992a9aa"
   elsif OS.linux?
       url "https://github.com/BurntSushi/ripgrep/releases/download/#{version}/ripgrep-#{version}-x86_64-unknown-linux-musl.tar.gz"
-      sha256 "ee4e0751ab108b6da4f47c52da187d5177dc371f0f512a7caaec5434e711c091"
+      sha256 "a18e0b611f9d9976b11ab8c3355a92c68c8bd1965b0d99366777751343e33938"
   end
 
   conflicts_with "ripgrep"
