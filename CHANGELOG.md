@@ -1,8 +1,32 @@
 14.0.0 (2023-11-26)
 ===================
-ripgrep 14 is a new major version release of ripgrep that has some
+ripgrep 14 is a new major version release of ripgrep that has some new
+features, performance improvements and a lot of bug fixes.
 
-**BREAKING CHANGES**
+The headling feature in this release is hyperlink support. In this release,
+they are an opt-in feature but may change to an opt-out feature in the future.
+To enable them, try passing `--hyperlink-format default`. If you use [VS Code],
+then try passing `--hyperlink-format vscode`. Please [report your experience
+with hyperlinks][report-hyperlinks], positive or negative.
+
+[VS Code]: https://code.visualstudio.com/
+[report-hyperlinks]: https://github.com/BurntSushi/ripgrep/discussions/2611
+
+Another headling development in this release is that it contains a rewrite of
+its regex engine. You generally shouldn't notice any changes, except for some
+searches may get faster. You can read more about the [regex engine rewrite on
+my blog][regex-internals].
+
+Finally, ripgrep switched the library it uses for argument parsing. Users
+should not notice a difference in most cases (error messages have changed
+somewhat), but flag overrides should generally be more consistent. For example,
+things like `--no-ignore --ignore-vcs` work as one would expect (disables all
+filtering related to ignore rules except for rules found in version control
+systems such as `git`).
+
+[regex-internals]: https://blog.burntsushi.net/regex-internals/
+
+**BREAKING CHANGES**:
 
 * `rg -C1 -A2` used to be equivalent to `rg -A2`, but now it is equivalent to
   `rg -B1 -A2`. That is, `-A` and `-B` no longer completely override `-C`.
