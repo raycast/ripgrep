@@ -1,3 +1,13 @@
+14.0.1 (2023-11-26)
+===================
+This a patch release meant to fix `cargo install ripgrep` on Windows.
+
+Bug fixes:
+
+* [BUG #2653](https://github.com/BurntSushi/ripgrep/issues/2653):
+  Include `pkg/windows/Manifest.xml` in crate package.
+
+
 14.0.0 (2023-11-26)
 ===================
 ripgrep 14 is a new major version release of ripgrep that has some new
