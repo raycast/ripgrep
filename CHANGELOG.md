@@ -13,7 +13,7 @@ Bug fixes:
 ripgrep 14 is a new major version release of ripgrep that has some new
 features, performance improvements and a lot of bug fixes.
 
-The headling feature in this release is hyperlink support. In this release,
+The headlining feature in this release is hyperlink support. In this release,
 they are an opt-in feature but may change to an opt-out feature in the future.
 To enable them, try passing `--hyperlink-format default`. If you use [VS Code],
 then try passing `--hyperlink-format vscode`. Please [report your experience
@@ -22,10 +22,10 @@ with hyperlinks][report-hyperlinks], positive or negative.
 [VS Code]: https://code.visualstudio.com/
 [report-hyperlinks]: https://github.com/BurntSushi/ripgrep/discussions/2611
 
-Another headling development in this release is that it contains a rewrite of
-its regex engine. You generally shouldn't notice any changes, except for some
-searches may get faster. You can read more about the [regex engine rewrite on
-my blog][regex-internals]. Please [report your performance improvements or
+Another headlining development in this release is that it contains a rewrite
+of its regex engine. You generally shouldn't notice any changes, except for
+some searches may get faster. You can read more about the [regex engine rewrite
+on my blog][regex-internals]. Please [report your performance improvements or
 regressions that you notice][report-perf].
 
 [report-perf]: https://github.com/BurntSushi/ripgrep/discussions/2652
