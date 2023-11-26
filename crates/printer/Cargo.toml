@@ -28,7 +28,7 @@ serde = { version = "1.0.193", optional = true }
 serde_json = { version = "1.0.107", optional = true }
 
 [dev-dependencies]
-grep-regex = { version = "0.1.11", path = "../regex" }
+grep-regex = { version = "0.1.12", path = "../regex" }
 
 [package.metadata.docs.rs]
 # We want to document all features.
