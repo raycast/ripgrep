@@ -15,7 +15,10 @@ with hyperlinks][report-hyperlinks], positive or negative.
 Another headling development in this release is that it contains a rewrite of
 its regex engine. You generally shouldn't notice any changes, except for some
 searches may get faster. You can read more about the [regex engine rewrite on
-my blog][regex-internals].
+my blog][regex-internals]. Please [report your performance improvements or
+regressions that you notice][report-perf].
+
+[report-perf]: https://github.com/BurntSushi/ripgrep/discussions/2652
 
 Finally, ripgrep switched the library it uses for argument parsing. Users
 should not notice a difference in most cases (error messages have changed
