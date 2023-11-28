@@ -19,7 +19,7 @@ grep-matcher = { version = "0.1.7", path = "../matcher" }
 grep-pcre2 = { version = "0.1.7", path = "../pcre2", optional = true }
 grep-printer = { version = "0.2.0", path = "../printer" }
 grep-regex = { version = "0.1.12", path = "../regex" }
-grep-searcher = { version = "0.1.12", path = "../searcher" }
+grep-searcher = { version = "0.1.13", path = "../searcher" }
 
 [dev-dependencies]
 termcolor = "1.0.4"

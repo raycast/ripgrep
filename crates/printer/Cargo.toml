@@ -21,7 +21,7 @@ serde = ["dep:serde", "dep:serde_json"]
 [dependencies]
 bstr = "1.6.2"
 grep-matcher = { version = "0.1.7", path = "../matcher" }
-grep-searcher = { version = "0.1.12", path = "../searcher" }
+grep-searcher = { version = "0.1.13", path = "../searcher" }
 log = "0.4.5"
 termcolor = "1.3.0"
 serde = { version = "1.0.193", optional = true }
