@@ -771,7 +771,13 @@ impl HiArgs {
         let Some(ref sort) = self.sort else { return Box::new(haystacks) };
         let mut with_timestamps: Vec<_> = match sort.kind {
             SortModeKind::Path if !sort.reverse => return Box::new(haystacks),
-            SortModeKind::Path => todo!(),
+            SortModeKind::Path => {
+                let mut haystacks = haystacks.collect::<Vec<Haystack>>();
+                haystacks.sort_by(|ref h1, ref h2| {
+                    h1.path().cmp(h2.path()).reverse()
+                });
+                return Box::new(haystacks.into_iter());
+            }
             SortModeKind::LastModified => {
                 attach_timestamps(haystacks, |md| md.modified()).collect()
             }

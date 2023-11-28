@@ -1,3 +1,13 @@
+14.0.3 (2023-11-28)
+===================
+This is a patch release with a bug fix for the `--sortr` flag.
+
+Bug fixes:
+
+* [BUG #2664](https://github.com/BurntSushi/ripgrep/issues/2664):
+  Fix `--sortr=path`. I left a `todo!()` in the source. Oof.
+
+
 14.0.2 (2023-11-27)
 ===================
 This is a patch release with a few small bug fixes.

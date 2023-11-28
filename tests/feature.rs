@@ -356,6 +356,17 @@ rgtest!(f263_sort_files, |dir: Dir, mut cmd: TestCommand| {
     eqnice!(expected, cmd.arg("--sort-files").arg("test").stdout());
 });
 
+// See: https://github.com/BurntSushi/ripgrep/issues/263
+rgtest!(f263_sort_files_reverse, |dir: Dir, mut cmd: TestCommand| {
+    dir.create("foo", "test");
+    dir.create("abc", "test");
+    dir.create("zoo", "test");
+    dir.create("bar", "test");
+
+    let expected = "zoo:test\nfoo:test\nbar:test\nabc:test\n";
+    eqnice!(expected, cmd.arg("--sortr=path").arg("test").stdout());
+});
+
 // See: https://github.com/BurntSushi/ripgrep/issues/275
 rgtest!(f275_pathsep, |dir: Dir, mut cmd: TestCommand| {
     dir.create_dir("foo");
