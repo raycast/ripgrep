@@ -346,9 +346,9 @@ dependencies = [
 
 [[package]]
 name = "pcre2-sys"
-version = "0.2.7"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f8f5556f23cf2c0b481949fdfc19a7cd9b27ddcb00ef3477b0f4935cbdaedf2"
+checksum = "25b8a7b5253a4465b873a21ee7e8d6ec561a57eed5d319621bec36bea35c86ae"
 dependencies = [
  "cc",
  "libc",
