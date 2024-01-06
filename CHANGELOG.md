@@ -9,8 +9,12 @@ Bug fixes:
 
 Feature enhancements:
 
+* Added or improved file type filtering for Lean and Meson.
 * [FEATURE #2684](https://github.com/BurntSushi/ripgrep/issues/2684):
   Improve completions for the `fish` shell.
+* [FEATURE #2702](https://github.com/BurntSushi/ripgrep/pull/2702):
+  Add release binaries for `armv7-unknown-linux-gnueabihf`,
+  `armv7-unknown-linux-musleabihf` and `armv7-unknown-linux-musleabi`.
 
 
 14.0.3 (2023-11-28)
