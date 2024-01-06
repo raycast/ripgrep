@@ -1,6 +1,9 @@
 14.1.0 (TBD)
 ============
-This is a minor release with a few small new features and bug fixes.
+This is a minor release with a few small new features and bug fixes. This
+release contains a bug fix for unbounded memory growth while walking a
+directory tree. This release also includes improvements to the completions for
+the `fish` shell, and release binaries for several additional ARM targets.
 
 Bug fixes:
 
