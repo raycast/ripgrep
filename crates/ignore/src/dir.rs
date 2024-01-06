@@ -34,11 +34,13 @@ use crate::{
 /// IgnoreMatch represents information about where a match came from when using
 /// the `Ignore` matcher.
 #[derive(Clone, Debug)]
+#[allow(dead_code)]
 pub(crate) struct IgnoreMatch<'a>(IgnoreMatchInner<'a>);
 
 /// IgnoreMatchInner describes precisely where the match information came from.
 /// This is private to allow expansion to more matchers in the future.
 #[derive(Clone, Debug)]
+#[allow(dead_code)]
 enum IgnoreMatchInner<'a> {
     Override(overrides::Glob<'a>),
     Gitignore(&'a gitignore::Glob),
