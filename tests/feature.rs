@@ -975,7 +975,7 @@ rgtest!(f1404_nothing_searched_warning, |dir: Dir, mut cmd: TestCommand| {
     let output = cmd.raw_output();
     let stderr = String::from_utf8_lossy(&output.stderr);
     let expected = "\
-        No files were searched, which means ripgrep probably applied \
+        rg: No files were searched, which means ripgrep probably applied \
         a filter you didn't expect.\n\
         Running with --debug will show why files are being skipped.\n\
     ";
