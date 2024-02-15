@@ -1080,9 +1080,18 @@ impl Paths {
             }
             paths.push(path);
         }
+        log::debug!("number of paths given to search: {}", paths.len());
         if !paths.is_empty() {
             let is_one_file = paths.len() == 1
-                && (paths[0] == Path::new("-") || paths[0].is_file());
+                // Note that we specifically use `!paths[0].is_dir()` here
+                // instead of `paths[0].is_file()`. Namely, the latter can
+                // return `false` even when the path is something resembling
+                // a file. So instead, we just consider the path a file as
+                // long as we know it isn't a directory.
+                //
+                // See: https://github.com/BurntSushi/ripgrep/issues/2736
+                && (paths[0] == Path::new("-") || !paths[0].is_dir());
+            log::debug!("is_one_file? {is_one_file:?}");
             return Ok(Paths { paths, has_implicit_path: false, is_one_file });
         }
         // N.B. is_readable_stdin is a heuristic! Part of the issue is that a
