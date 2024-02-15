@@ -182,7 +182,6 @@ pub fn is_readable_stdin() -> bool {
         let file = File::from(fd);
         let Ok(md) = file.metadata() else { return false };
         let ft = md.file_type();
-        dbg!(&ft);
         ft.is_file() || ft.is_fifo() || ft.is_socket()
     }
 
