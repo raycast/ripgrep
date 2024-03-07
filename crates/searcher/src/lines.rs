@@ -198,8 +198,6 @@ fn preceding_by_pos(
 
 #[cfg(test)]
 mod tests {
-    use grep_matcher::Match;
-
     use super::*;
 
     const SHERLOCK: &'static str = "\

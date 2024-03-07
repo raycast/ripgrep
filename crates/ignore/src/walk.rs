@@ -11,7 +11,7 @@ use std::{
 use {
     crossbeam_deque::{Stealer, Worker as Deque},
     same_file::Handle,
-    walkdir::{self, WalkDir},
+    walkdir::WalkDir,
 };
 
 use crate::{

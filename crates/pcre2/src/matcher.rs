@@ -428,7 +428,7 @@ fn has_uppercase_literal(pattern: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use grep_matcher::{LineMatchKind, Matcher};
+    use grep_matcher::LineMatchKind;
 
     use super::*;
 

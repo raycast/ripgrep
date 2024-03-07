@@ -1,6 +1,6 @@
 use std::io::{self, IsTerminal};
 
-use termcolor::{self, HyperlinkSpec};
+use termcolor::HyperlinkSpec;
 
 /// A writer that supports coloring with either line or block buffering.
 #[derive(Debug)]

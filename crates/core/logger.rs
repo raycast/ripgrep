@@ -6,7 +6,7 @@ print to stderr. We therefore avoid bringing in extra dependencies just for
 this functionality.
 */
 
-use log::{self, Log};
+use log::Log;
 
 /// The simplest possible logger that logs to stderr.
 ///

@@ -548,7 +548,7 @@ fn replace_bytes(
 
 #[cfg(test)]
 mod tests {
-    use bstr::{ByteSlice, ByteVec};
+    use bstr::ByteVec;
 
     use super::*;
 

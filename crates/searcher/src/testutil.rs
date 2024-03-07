@@ -725,8 +725,6 @@ impl TesterConfig {
 
 #[cfg(test)]
 mod tests {
-    use grep_matcher::{Match, Matcher};
-
     use super::*;
 
     fn m(start: usize, end: usize) -> Match {
