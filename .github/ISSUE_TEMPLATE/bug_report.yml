@@ -24,7 +24,7 @@ body:
     attributes:
       label: What version of ripgrep are you using?
       description: Enter the output of `rg --version`.
-      placeholder: ex. ripgrep 13.0.0
+      placeholder: ex. ripgrep 0.2.1
     validations:
       required: true
 
