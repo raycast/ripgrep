@@ -1,3 +1,4 @@
+use std::fmt::Write;
 use std::path::{is_separator, Path};
 
 use regex_automata::meta::Regex;
@@ -732,7 +733,9 @@ impl Tokens {
 /// Convert a Unicode scalar value to an escaped string suitable for use as
 /// a literal in a non-Unicode regex.
 fn char_to_escaped_literal(c: char) -> String {
-    bytes_to_escaped_literal(&c.to_string().into_bytes())
+    let mut buf = [0; 4];
+    let bytes = c.encode_utf8(&mut buf).as_bytes();
+    bytes_to_escaped_literal(bytes)
 }
 
 /// Converts an arbitrary sequence of bytes to a UTF-8 string. All non-ASCII
@@ -741,11 +744,12 @@ fn bytes_to_escaped_literal(bs: &[u8]) -> String {
     let mut s = String::with_capacity(bs.len());
     for &b in bs {
         if b <= 0x7F {
-            s.push_str(&regex_syntax::escape(
+            regex_syntax::escape_into(
                 char::from(b).encode_utf8(&mut [0; 4]),
-            ));
+                &mut s,
+            );
         } else {
-            s.push_str(&format!("\\x{:02x}", b));
+            write!(&mut s, "\\x{:02x}", b).unwrap();
         }
     }
     s
