@@ -20,7 +20,7 @@ use {
 };
 
 use crate::{
-    pathutil::{is_file_name, strip_prefix},
+    pathutil::{is_file_name, is_online_only, strip_prefix},
     Error, Match, PartialErrorBuilder,
 };
 
@@ -308,6 +308,7 @@ pub struct GitignoreBuilder {
     root: PathBuf,
     globs: Vec<Glob>,
     case_insensitive: bool,
+    skip_online_only: bool,
 }
 
 impl GitignoreBuilder {
@@ -324,6 +325,7 @@ impl GitignoreBuilder {
             root: strip_prefix("./", root).unwrap_or(root).to_path_buf(),
             globs: vec![],
             case_insensitive: false,
+            skip_online_only: false,
         }
     }
 
@@ -386,6 +388,10 @@ impl GitignoreBuilder {
     /// all other valid globs will still be added.
     pub fn add<P: AsRef<Path>>(&mut self, path: P) -> Option<Error> {
         let path = path.as_ref();
+        if self.skip_online_only && is_online_only(path) {
+            log::debug!("gitignore is online-only: {}", path.display());
+            return None;
+        }
         let file = match File::open(path) {
             Err(err) => return Some(Error::Io(err).with_path(path)),
             Ok(file) => file,
@@ -528,6 +534,19 @@ impl GitignoreBuilder {
         // TODO: This should not return a `Result`. Fix this in the next semver
         // release.
         self.case_insensitive = yes;
+        Ok(self)
+    }
+
+    /// Toggle whether online-only ignore files should be read.
+    /// This is to prevent potential blocking if the internet connection is down
+    /// while the ignore file is being read–which triggers downloading.
+    ///
+    /// This is disabled by default.
+    pub fn skip_online_only(
+        &mut self,
+        yes: bool,
+    ) -> Result<&mut GitignoreBuilder, Error> {
+        self.skip_online_only = yes;
         Ok(self)
     }
 }

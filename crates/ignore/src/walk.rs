@@ -885,6 +885,14 @@ impl WalkBuilder {
         self
     }
 
+    /// Skips reading ignore files that are available only online.
+    ///
+    /// This is disabled by default.
+    pub fn skip_online_only_ignore(&mut self, yes: bool) -> &mut WalkBuilder {
+        self.ig_builder.skip_online_only_ignore(yes);
+        self
+    }
+
     /// Yields only entries which satisfy the given predicate and skips
     /// descending into directories that do not satisfy the given predicate.
     ///

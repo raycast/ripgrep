@@ -140,7 +140,7 @@ dependencies = [
  "libc",
  "log",
  "termcolor",
- "winapi-util",
+ "winapi-util 0.1.7",
 ]
 
 [[package]]
@@ -213,7 +213,7 @@ dependencies = [
  "regex-automata",
  "same-file",
  "walkdir",
- "winapi-util",
+ "winapi-util 0.1.8",
 ]
 
 [[package]]
@@ -396,7 +396,7 @@ version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502"
 dependencies = [
- "winapi-util",
+ "winapi-util 0.1.7",
 ]
 
 [[package]]
@@ -447,7 +447,7 @@ version = "1.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "06794f8f6c5c898b3275aebefa6b8a1cb24cd2c6c79397ab15774837a0bc5755"
 dependencies = [
- "winapi-util",
+ "winapi-util 0.1.7",
 ]
 
 [[package]]
@@ -469,7 +469,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "29790946404f91d9c5d06f9874efddea1dc06c5efe94541a7d6863108e3a5e4b"
 dependencies = [
  "same-file",
- "winapi-util",
+ "winapi-util 0.1.7",
 ]
 
 [[package]]
@@ -477,6 +477,14 @@ name = "winapi-util"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "134306a13c5647ad6453e8deaec55d3a44d6021970129e6188735e74bf546697"
+dependencies = [
+ "windows-sys",
+]
+
+[[package]]
+name = "winapi-util"
+version = "0.1.8"
+source = "git+https://github.com/raycast/winapi-util.git?branch=online-only-attribute#835db3bb71f580f01b14f5fc9d9aa2eddc0c81e2"
 dependencies = [
  "windows-sys",
 ]

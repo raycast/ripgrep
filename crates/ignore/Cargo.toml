@@ -1,6 +1,6 @@
 [package]
 name = "ignore"
-version = "0.4.22"  #:version
+version = "0.4.22" #:version
 authors = ["Andrew Gallant <jamslam@gmail.com>"]
 description = """
 A fast library for efficiently matching ignore files such as `.gitignore`
@@ -32,7 +32,9 @@ default-features = false
 features = ["std", "perf", "syntax", "meta", "nfa", "hybrid", "dfa-onepass"]
 
 [target.'cfg(windows)'.dependencies.winapi-util]
-version = "0.1.2"
+# Point to our custom fork of the `winapi-util` crate that supports online-only file attribute.
+git = "https://github.com/raycast/winapi-util.git"
+branch = "online-only-attribute"
 
 [dev-dependencies]
 bstr = { version = "1.6.2", default-features = false, features = ["std"] }
