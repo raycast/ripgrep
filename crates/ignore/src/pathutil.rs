@@ -56,6 +56,33 @@ pub(crate) fn is_hidden(dent: &DirEntry) -> bool {
     }
 }
 
+/// Determine if the file is an online-only file.
+///
+/// Online-only if the file blocks allocated value is zero.
+#[cfg(unix)]
+pub(crate) fn is_online_only<P: AsRef<Path>>(path: P) -> bool {
+    use std::os::unix::fs::MetadataExt;
+
+    if let Ok(md) = std::fs::symlink_metadata(path) {
+        return md.blocks() == 0;
+    }
+    false
+}
+
+/// Determine if the file is an online-only file.
+#[cfg(windows)]
+pub(crate) fn is_online_only<P: AsRef<Path>>(path: P) -> bool {
+    use std::os::windows::fs::MetadataExt;
+    use winapi_util::file;
+
+    if let Ok(md) = std::fs::symlink_metadata(path) {
+        if file::is_online_only(md.file_attributes() as u64) {
+            return true;
+        }
+    }
+    false
+}
+
 /// Strip `prefix` from the `path` and return the remainder.
 ///
 /// If `path` doesn't have a prefix `prefix`, then return `None`.

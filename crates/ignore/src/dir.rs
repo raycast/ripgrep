@@ -87,6 +87,8 @@ struct IgnoreOptions {
     /// Whether a git repository must be present in order to apply any
     /// git-related ignore rules.
     require_git: bool,
+    /// Whether to skip reading online-only ignore files.
+    skip_online_only_ignore: bool,
 }
 
 /// Ignore is a matcher useful for recursively walking one or more directories.
@@ -262,6 +264,7 @@ impl Ignore {
                 &dir,
                 &self.0.custom_ignore_filenames,
                 self.0.opts.ignore_case_insensitive,
+                self.0.opts.skip_online_only_ignore,
             );
             errs.maybe_push(err);
             m
@@ -274,6 +277,7 @@ impl Ignore {
                 &dir,
                 &[".ignore"],
                 self.0.opts.ignore_case_insensitive,
+                self.0.opts.skip_online_only_ignore,
             );
             errs.maybe_push(err);
             m
@@ -286,6 +290,7 @@ impl Ignore {
                 &dir,
                 &[".gitignore"],
                 self.0.opts.ignore_case_insensitive,
+                self.0.opts.skip_online_only_ignore,
             );
             errs.maybe_push(err);
             m
@@ -300,6 +305,7 @@ impl Ignore {
                         &git_dir,
                         &["info/exclude"],
                         self.0.opts.ignore_case_insensitive,
+                        self.0.opts.skip_online_only_ignore,
                     );
                     errs.maybe_push(err);
                     m
@@ -600,6 +606,7 @@ impl IgnoreBuilder {
                 git_exclude: true,
                 ignore_case_insensitive: false,
                 require_git: true,
+                skip_online_only_ignore: false,
             },
         }
     }
@@ -773,6 +780,17 @@ impl IgnoreBuilder {
         self.opts.ignore_case_insensitive = yes;
         self
     }
+
+    /// Skip reading ignore files that are marked as online-only.
+    ///
+    /// This is disabled by default.
+    pub(crate) fn skip_online_only_ignore(
+        &mut self,
+        yes: bool,
+    ) -> &mut IgnoreBuilder {
+        self.opts.skip_online_only_ignore = yes;
+        self
+    }
 }
 
 /// Creates a new gitignore matcher for the directory given.
@@ -788,10 +806,15 @@ pub(crate) fn create_gitignore<T: AsRef<OsStr>>(
     dir_for_ignorefile: &Path,
     names: &[T],
     case_insensitive: bool,
+    skip_online_only: bool,
 ) -> (Gitignore, Option<Error>) {
     let mut builder = GitignoreBuilder::new(dir);
     let mut errs = PartialErrorBuilder::default();
-    builder.case_insensitive(case_insensitive).unwrap();
+    builder
+        .case_insensitive(case_insensitive)
+        .unwrap()
+        .skip_online_only(skip_online_only)
+        .unwrap();
     for name in names {
         let gipath = dir_for_ignorefile.join(name.as_ref());
         // This check is not necessary, but is added for performance. Namely,
