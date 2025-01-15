@@ -60,7 +60,7 @@ pub(crate) fn is_hidden(dent: &DirEntry) -> bool {
 ///
 /// Online-only if the file blocks allocated value is zero.
 #[cfg(unix)]
-pub(crate) fn is_online_only<P: AsRef<Path>>(path: P) -> bool {
+pub(crate) fn is_online_only_path<P: AsRef<Path>>(path: P) -> bool {
     use std::os::unix::fs::MetadataExt;
 
     if let Ok(md) = std::fs::symlink_metadata(path) {
@@ -71,7 +71,7 @@ pub(crate) fn is_online_only<P: AsRef<Path>>(path: P) -> bool {
 
 /// Determine if the file is an online-only file.
 #[cfg(windows)]
-pub(crate) fn is_online_only<P: AsRef<Path>>(path: P) -> bool {
+pub(crate) fn is_online_only_path<P: AsRef<Path>>(path: P) -> bool {
     use std::os::windows::fs::MetadataExt;
     use winapi_util::file;
 
@@ -81,6 +81,13 @@ pub(crate) fn is_online_only<P: AsRef<Path>>(path: P) -> bool {
         }
     }
     false
+}
+
+/// Determine if the file is an online-only file.
+///
+/// Online-only if the file blocks allocated value is zero.
+pub(crate) fn is_online_only(dent: &DirEntry) -> bool {
+    is_online_only_path(dent.path())
 }
 
 /// Strip `prefix` from the `path` and return the remainder.

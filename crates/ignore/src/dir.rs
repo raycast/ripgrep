@@ -28,7 +28,7 @@ use crate::{
     pathutil::{is_hidden, strip_prefix},
     types::{self, Types},
     walk::DirEntry,
-    {Error, Match, PartialErrorBuilder},
+    Error, Match, PartialErrorBuilder,
 };
 
 /// IgnoreMatch represents information about where a match came from when using
@@ -361,6 +361,7 @@ impl Ignore {
         if m.is_none() && self.0.opts.hidden && is_hidden(dent) {
             return Match::Ignore(IgnoreMatch::hidden());
         }
+
         m
     }
 
@@ -379,6 +380,7 @@ impl Ignore {
         if let Some(p) = strip_prefix("./", path) {
             path = p;
         }
+
         // Match against the override patterns. If an override matches
         // regardless of whether it's whitelist/ignore, then we quit and
         // return that result immediately. Overrides have the highest
@@ -394,6 +396,7 @@ impl Ignore {
             }
         }
         let mut whitelisted = Match::None;
+
         if self.has_any_ignore_rules() {
             let mat = self.matched_ignore(path, is_dir);
             if mat.is_ignore() {
@@ -411,6 +414,7 @@ impl Ignore {
                 whitelisted = mat;
             }
         }
+
         whitelisted
     }
 

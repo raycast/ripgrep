@@ -18,6 +18,7 @@ use crate::{
     dir::{Ignore, IgnoreBuilder},
     gitignore::GitignoreBuilder,
     overrides::Override,
+    pathutil::is_online_only,
     types::Types,
     Error, PartialErrorBuilder,
 };
@@ -491,6 +492,7 @@ pub struct WalkBuilder {
     threads: usize,
     skip: Option<Arc<Handle>>,
     filter: Option<Filter>,
+    skip_online_only: bool,
 }
 
 #[derive(Clone)]
@@ -535,6 +537,7 @@ impl WalkBuilder {
             threads: 0,
             skip: None,
             filter: None,
+            skip_online_only: false,
         }
     }
 
@@ -584,6 +587,7 @@ impl WalkBuilder {
             max_filesize: self.max_filesize,
             skip: self.skip.clone(),
             filter: self.filter.clone(),
+            skip_online_only: self.skip_online_only,
         }
     }
 
@@ -893,6 +897,16 @@ impl WalkBuilder {
         self
     }
 
+    /// Skips all files that are available only online.
+    /// Implies `skip_online_only_ignore`
+    ///
+    /// This is disabled by default.
+    pub fn skip_online_only(&mut self, yes: bool) -> &mut WalkBuilder {
+        self.ig_builder.skip_online_only_ignore(yes);
+        self.skip_online_only = yes;
+        self
+    }
+
     /// Yields only entries which satisfy the given predicate and skips
     /// descending into directories that do not satisfy the given predicate.
     ///
@@ -925,6 +939,7 @@ pub struct Walk {
     max_filesize: Option<u64>,
     skip: Option<Arc<Handle>>,
     filter: Option<Filter>,
+    skip_online_only: bool,
 }
 
 impl Walk {
@@ -951,6 +966,9 @@ impl Walk {
         // who ensured correct file-type filters were being used could still
         // get unnecessary file access resulting in large downloads.
         if should_skip_entry(&self.ig, ent) {
+            return Ok(true);
+        }
+        if self.skip_online_only && crate::pathutil::is_online_only(ent) {
             return Ok(true);
         }
         if let Some(ref stdout) = self.skip {
@@ -1632,6 +1650,9 @@ impl<'s> Worker<'s> {
         // N.B. See analogous call in the single-threaded implementation about
         // why it's important for this to come before the checks below.
         if should_skip_entry(ig, &dent) {
+            return WalkState::Continue;
+        }
+        if is_online_only(&dent) {
             return WalkState::Continue;
         }
         if let Some(ref stdout) = self.skip {
