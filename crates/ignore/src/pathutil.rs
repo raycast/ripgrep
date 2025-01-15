@@ -61,12 +61,28 @@ pub(crate) fn is_hidden(dent: &DirEntry) -> bool {
 /// Online-only if the file blocks allocated value is zero.
 #[cfg(unix)]
 pub(crate) fn is_online_only_path<P: AsRef<Path>>(path: P) -> bool {
-    use std::os::unix::fs::MetadataExt;
+    let path = path.as_ref().as_os_str().to_str().unwrap();
+    let ns_string = objc2_foundation::NSString::from_str(path);
+    unsafe {
+            let ns_url = objc2_foundation::NSURL::fileURLWithPath(&ns_string);
 
-    if let Ok(md) = std::fs::symlink_metadata(path) {
-        return md.blocks() == 0;
-    }
-    false
+            let mut value: Option<objc2::rc::Retained<objc2::runtime::AnyObject>> = None;
+            let _ = ns_url.getResourceValue_forKey_error(
+                &mut value,
+                objc2_foundation::NSURLUbiquitousItemDownloadingStatusKey,
+            );
+
+            if let Some(v) = value {
+                let ns_string: objc2::rc::Retained<objc2_foundation::NSString> =
+                    std::mem::transmute(v);
+                return ns_string.as_ref()
+                    == objc2_foundation::NSURLUbiquitousItemDownloadingStatusNotDownloaded
+            } else {
+                false
+            }
+        }
+
+
 }
 
 /// Determine if the file is an online-only file.
@@ -84,8 +100,6 @@ pub(crate) fn is_online_only_path<P: AsRef<Path>>(path: P) -> bool {
 }
 
 /// Determine if the file is an online-only file.
-///
-/// Online-only if the file blocks allocated value is zero.
 pub(crate) fn is_online_only(dent: &DirEntry) -> bool {
     is_online_only_path(dent.path())
 }
