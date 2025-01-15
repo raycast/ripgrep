@@ -20,7 +20,7 @@ use {
 };
 
 use crate::{
-    pathutil::{is_file_name, is_online_only, strip_prefix},
+    pathutil::{is_file_name, is_online_only_path, strip_prefix},
     Error, Match, PartialErrorBuilder,
 };
 
@@ -388,7 +388,7 @@ impl GitignoreBuilder {
     /// all other valid globs will still be added.
     pub fn add<P: AsRef<Path>>(&mut self, path: P) -> Option<Error> {
         let path = path.as_ref();
-        if self.skip_online_only && is_online_only(path) {
+        if self.skip_online_only && is_online_only_path(path) {
             log::debug!("gitignore is online-only: {}", path.display());
             return None;
         }
