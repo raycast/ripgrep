@@ -84,8 +84,6 @@ pub(crate) fn is_online_only_path<P: AsRef<Path>>(path: P) -> bool {
 }
 
 /// Determine if the file is an online-only file.
-///
-/// Online-only if the file blocks allocated value is zero.
 pub(crate) fn is_online_only(dent: &DirEntry) -> bool {
     is_online_only_path(dent.path())
 }
