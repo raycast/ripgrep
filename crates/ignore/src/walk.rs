@@ -1652,6 +1652,7 @@ impl<'s> Worker<'s> {
         if should_skip_entry(ig, &dent) {
             return WalkState::Continue;
         }
+        #[cfg(windows)]
         if is_online_only(&dent) {
             return WalkState::Continue;
         }
