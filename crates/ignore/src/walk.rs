@@ -968,15 +968,15 @@ impl Walk {
         if should_skip_entry(&self.ig, ent) {
             return Ok(true);
         }
-        if self.skip_online_only && crate::pathutil::is_online_only(ent) {
-            return Ok(true);
-        }
         if let Some(ref stdout) = self.skip {
             if path_equals(ent, stdout)? {
                 return Ok(true);
             }
         }
         if self.max_filesize.is_some() && !ent.is_dir() {
+            if self.skip_online_only && crate::pathutil::is_online_only(ent) {
+                return Ok(false);
+            }
             return Ok(skip_filesize(
                 self.max_filesize.unwrap(),
                 ent.path(),
@@ -1652,10 +1652,7 @@ impl<'s> Worker<'s> {
         if should_skip_entry(ig, &dent) {
             return WalkState::Continue;
         }
-        #[cfg(windows)]
-        if is_online_only(&dent) {
-            return WalkState::Continue;
-        }
+
         if let Some(ref stdout) = self.skip {
             let is_stdout = match path_equals(&dent, stdout) {
                 Ok(is_stdout) => is_stdout,
@@ -1667,11 +1664,15 @@ impl<'s> Worker<'s> {
         }
         let should_skip_filesize =
             if self.max_filesize.is_some() && !dent.is_dir() {
-                skip_filesize(
-                    self.max_filesize.unwrap(),
-                    dent.path(),
-                    &dent.metadata().ok(),
-                )
+                if cfg!(windows) && is_online_only(&dent) {
+                    false
+                } else {
+                    skip_filesize(
+                        self.max_filesize.unwrap(),
+                        dent.path(),
+                        &dent.metadata().ok(),
+                    )
+                }
             } else {
                 false
             };
