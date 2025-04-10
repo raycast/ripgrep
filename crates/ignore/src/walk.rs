@@ -1653,6 +1653,12 @@ impl<'s> Worker<'s> {
             return WalkState::Continue;
         }
 
+        // Skip all checks and submit
+        if is_online_only(&dent) {
+            self.send(Work { dent, ignore: ig.clone(), root_device });
+            return WalkState::Continue;
+        }
+
         if let Some(ref stdout) = self.skip {
             let is_stdout = match path_equals(&dent, stdout) {
                 Ok(is_stdout) => is_stdout,
