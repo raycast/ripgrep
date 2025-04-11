@@ -1666,15 +1666,11 @@ impl<'s> Worker<'s> {
         }
         let should_skip_filesize =
             if self.max_filesize.is_some() && !dent.is_dir() {
-                if cfg!(windows) && is_online_only(&dent) {
-                    false
-                } else {
-                    skip_filesize(
-                        self.max_filesize.unwrap(),
-                        dent.path(),
-                        &dent.metadata().ok(),
-                    )
-                }
+                skip_filesize(
+                    self.max_filesize.unwrap(),
+                    dent.path(),
+                    &dent.metadata().ok(),
+                )
             } else {
                 false
             };
