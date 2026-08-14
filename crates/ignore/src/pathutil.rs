@@ -56,16 +56,39 @@ pub(crate) fn is_hidden(dent: &DirEntry) -> bool {
     }
 }
 
-/// Determine if the file is an online-only file.
+/// Determine if the file is an online-only file, i.e., one whose contents a
+/// cloud provider would have to download before they could be read.
 ///
-/// Online-only if the file blocks allocated value is zero.
-#[cfg(unix)]
+/// This is the kernel's own `SF_DATALESS` mark, which is set for File Provider
+/// items whichever provider backs them (iCloud Drive, Google Drive, OneDrive,
+/// Dropbox, third-party mounts under `~/Library/CloudStorage`).
+///
+/// It replaces an earlier `st_blocks == 0` heuristic, which asked whether the
+/// file allocates any blocks — a different question. Every empty file answers
+/// zero, as do provider-generated stubs (a Google Drive shortcut file was
+/// observed at 112 bytes across zero blocks with no dataless mark). Callers skip
+/// reading an ignore file when this returns true, so each such misread silently
+/// discards whatever rules that file held.
+#[cfg(target_os = "macos")]
 pub(crate) fn is_online_only_path<P: AsRef<Path>>(path: P) -> bool {
-    use std::os::unix::fs::MetadataExt;
+    use std::os::macos::fs::MetadataExt;
+
+    /// `SF_DATALESS` from `sys/stat.h`. Reading it needs no privileges; only
+    /// setting an `SF_*` flag does.
+    const SF_DATALESS: u32 = 0x4000_0000;
 
     if let Ok(md) = std::fs::symlink_metadata(path) {
-        return md.blocks() == 0;
+        return md.st_flags() & SF_DATALESS != 0;
     }
+    false
+}
+
+/// Determine if the file is an online-only file.
+///
+/// These targets have no cloud-placeholder concept, so no file is online-only
+/// and every read is served locally.
+#[cfg(all(unix, not(target_os = "macos")))]
+pub(crate) fn is_online_only_path<P: AsRef<Path>>(_path: P) -> bool {
     false
 }
 
@@ -171,4 +194,60 @@ pub(crate) fn file_name<'a, P: AsRef<Path> + ?Sized>(
     path: &'a P,
 ) -> Option<&'a OsStr> {
     path.as_ref().file_name()
+}
+
+#[cfg(all(test, target_os = "macos"))]
+mod tests {
+    use super::is_online_only_path;
+
+    fn scratch_dir(name: &str) -> std::path::PathBuf {
+        let dir = std::env::temp_dir()
+            .join(format!("ignore-online-only-{}-{}", std::process::id(), name));
+        std::fs::create_dir_all(&dir).unwrap();
+        dir
+    }
+
+    /// A file whose data is on this disk is never online-only, however few blocks
+    /// it allocates. An empty file allocates none, which is exactly what the
+    /// previous `st_blocks == 0` heuristic mistook for a cloud placeholder.
+    #[test]
+    fn resident_files_are_not_online_only() {
+        let dir = scratch_dir("resident");
+
+        let empty = dir.join("empty");
+        std::fs::write(&empty, b"").unwrap();
+        assert!(
+            !is_online_only_path(&empty),
+            "an empty file allocates no blocks but its contents are right here"
+        );
+
+        let with_rules = dir.join("gitignore");
+        std::fs::write(&with_rules, b"*.log\n").unwrap();
+        assert!(!is_online_only_path(&with_rules));
+
+        assert!(
+            !is_online_only_path(dir.join("absent")),
+            "a path that is not there has nothing to download"
+        );
+
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
+
+    /// Proves the signal against a genuinely evicted file, which no temporary file
+    /// can stand in for: only a cloud provider can create a dataless object. Point
+    /// `IGNORE_TEST_DATALESS_FILE` at one (anything under `~/Library/CloudStorage`
+    /// or `~/Library/Mobile Documents` shown as not downloaded) to run it. Skipped
+    /// when unset so the suite stays hermetic.
+    #[test]
+    fn an_evicted_file_is_online_only() {
+        let path = match std::env::var("IGNORE_TEST_DATALESS_FILE") {
+            Ok(path) => path,
+            Err(_) => return,
+        };
+        assert!(
+            is_online_only_path(&path),
+            "{} should be recognised as online-only",
+            path
+        );
+    }
 }

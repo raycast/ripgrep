@@ -626,6 +626,12 @@ impl IgnoreBuilder {
             let mut builder = GitignoreBuilder::new("");
             builder
                 .case_insensitive(self.opts.ignore_case_insensitive)
+                .unwrap()
+                // The global excludes file is as likely to live on a synced path
+                // as any other ignore file, and reading an online-only one
+                // blocks on a download. Every per-directory ignore file already
+                // honours this; this one was missed.
+                .skip_online_only(self.opts.skip_online_only_ignore)
                 .unwrap();
             let (gi, err) = builder.build_global();
             if let Some(err) = err {
